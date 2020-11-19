@@ -7,6 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RedCrossBingo.Models; 
 using Microsoft.EntityFrameworkCore; 
+using RedCrossBingo.Repositories;
+using GraphQL;
+using RedCrossBingo.GraphQL;
+using GraphQL.Server;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using GraphQL.Server.Ui.Playground;
+
 
 namespace RedCrossBingo
 {
@@ -25,9 +32,24 @@ namespace RedCrossBingo
             services.AddDbContext<DataBaseContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention());
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
+
+             //dependency injection
+            services.AddScoped<BingocardsRepository>();
+            services.AddScoped<BingocardsnumbersRepository>();
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<RedCrossBingoSchema>();
+
+            //Graphql configuration
+            services.AddGraphQL(o => { o.ExposeExceptions = true;})
+                    .AddGraphTypes(ServiceLifetime.Scoped);
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
+            });
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
             });
         }
 
@@ -53,6 +75,11 @@ namespace RedCrossBingo
             }
 
             app.UseRouting();
+             app.UseGraphQL<RedCrossBingoSchema>();
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
+            {
+                Path = "/ui/playground"
+            });
 
             app.UseEndpoints(endpoints =>
             {
