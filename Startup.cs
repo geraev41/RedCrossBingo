@@ -39,6 +39,7 @@ namespace RedCrossBingo
             services.AddScoped<BingonumberRepository>();
             services.AddScoped<MainAdminRepository>();
             services.AddScoped<UserRepository>();
+             services.AddScoped<RoomsRepository>();
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<RedCrossBingoSchema>();

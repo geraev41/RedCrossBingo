@@ -29,6 +29,12 @@ namespace  RedCrossBingo.Repositories
             return b;
         }
 
+        public IEnumerable<Rooms> numberFromRooms(long numberId){
+            var results = from rooms in _context.Rooms select rooms;
+            results = results.Where(a => a.Id == numberId); 
+            return results;
+        }
+
           public IEnumerable<BingoNumbers>  GetNumberTrue(bool isChoose)
         {
             var results = from numbers in _context.BingoNumbers select numbers;
@@ -43,20 +49,20 @@ namespace  RedCrossBingo.Repositories
             return results;
         }
 
-        public IEnumerable<BingoNumbers> GetNumber(long roomsId, long number)
-        {
-            var results = from numbers in _context.BingoNumbers select numbers;
-            //var bingo= new BingoNumbers();
-            var bingo= _context.BingoNumbers.Find(x=>x.RoomsId==roomsId && x.Number==number); 
-            // foreach (var cr in cards.Where(e => e.RoomsId == roomsId && e.number==number))
-            // {
-            //     bingo.Id = cr.Id;
-            //     bingo.number= cr.number;
-            //     bingo.RoomsId = cr.RoomsId;               
-            // }
+        // public IEnumerable<BingoNumbers> GetNumber(long roomsId, long number)
+        // {
+        //     var results = from numbers in _context.BingoNumbers select numbers;
+        //     //var bingo= new BingoNumbers();
+        //     var bingo= _context.BingoNumbers.Find(x=>x.RoomsId==roomsId && x.Number==number); 
+        //     // foreach (var cr in cards.Where(e => e.RoomsId == roomsId && e.number==number))
+        //     // {
+        //     //     bingo.Id = cr.Id;
+        //     //     bingo.number= cr.number;
+        //     //     bingo.RoomsId = cr.RoomsId;               
+        //     // }
             
-           return bingo;
-        }
+        //    return bingo;
+        // }
 
   public async Task<BingoNumbers> Update(long id, BingoNumbers b) {
             b.Id = id;
@@ -79,7 +85,6 @@ namespace  RedCrossBingo.Repositories
             await _context.SaveChangesAsync();
             return b;
         }
-
 
     }
 }
