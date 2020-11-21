@@ -16,7 +16,7 @@ namespace  RedCrossBingo.GraphQL.Types
             Field<ListGraphType<RoomsType>>(
                  "rooms",
                  resolve: context => {
-                     return b.numberFromRooms((context.Source.Id));
+                     return b.numberFromRooms((context.Source.RoomsId));
                  }
             );
 
