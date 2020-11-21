@@ -33,10 +33,6 @@ namespace  RedCrossBingo.Repositories
         {
             var results = from cardnumbers in _context.BingoCardNumbers select cardnumbers;
             results = results.Where(c=> c.BingoCardsId == cardId);  
-            foreach (var item in results)
-            {
-                System.Console.WriteLine("Numero: " + item.number);
-            }
             return results;
         }
 
