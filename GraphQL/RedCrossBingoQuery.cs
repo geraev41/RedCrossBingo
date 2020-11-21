@@ -15,6 +15,7 @@ namespace RedCrossBingo.GraphQL{
            ShowCardsNumbers(numbersRepo); 
            ShowNumbers(bingoNum);
            ShowRooms(rooms);
+           getNumberForTombola(bingoNum); 
         }
       
         private void ShowCards(BingocardsRepository b ){
@@ -46,5 +47,12 @@ namespace RedCrossBingo.GraphQL{
             });
         }
         
+
+        private void getNumberForTombola(BingonumberRepository b ){
+             Field<BingoNumbersType>("getNumber",
+                resolve: context => {
+                return b.GetNumber(1, 14);
+            });
+        }
     }
 }

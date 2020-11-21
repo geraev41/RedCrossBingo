@@ -49,20 +49,19 @@ namespace  RedCrossBingo.Repositories
             return results;
         }
 
-        // public IEnumerable<BingoNumbers> GetNumber(long roomsId, long number)
-        // {
-        //     var results = from numbers in _context.BingoNumbers select numbers;
-        //     //var bingo= new BingoNumbers();
-        //     var bingo= _context.BingoNumbers.Find(x=>x.RoomsId==roomsId && x.Number==number); 
-        //     // foreach (var cr in cards.Where(e => e.RoomsId == roomsId && e.number==number))
-        //     // {
-        //     //     bingo.Id = cr.Id;
-        //     //     bingo.number= cr.number;
-        //     //     bingo.RoomsId = cr.RoomsId;               
-        //     // }
+        public BingoNumbers GetNumber(long roomsId, long number)
+        {
+            var results = from numbers in _context.BingoNumbers select numbers;
+            var bingo = results.Single(x=> x.RoomsId == roomsId && x.number == number); 
+            // foreach (var cr in cards.Where(e => e.RoomsId == roomsId && e.number==number))
+            // {
+            //     bingo.Id = cr.Id;
+            //     bingo.number= cr.number;
+            //     bingo.RoomsId = cr.RoomsId;               
+            // }
             
-        //    return bingo;
-        // }
+           return bingo;
+        }
 
   public async Task<BingoNumbers> Update(long id, BingoNumbers b) {
             b.Id = id;
