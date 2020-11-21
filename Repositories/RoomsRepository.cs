@@ -29,15 +29,15 @@ namespace  RedCrossBingo.Repositories
             return b;
         }
 
-       public IEnumerable<BingoCards> cardsFromRooms(long cardId){
+       public IEnumerable<BingoCards> cardsFromRooms(long roomsId){
             var results = from cards in _context.BingoCards select cards;
-            results = results.Where(a => a.Id == cardId); 
+            results = results.Where(a => a.RoomsId == roomsId); 
             return results;
         }
 
-      public IEnumerable<BingoNumbers> numberFromRooms(long numberId){
+      public IEnumerable<BingoNumbers> numberFromRooms(long roomsId){
             var results = from number in _context.BingoNumbers select number;
-            results = results.Where(a => a.Id == numberId); 
+            results = results.Where(a => a.RoomsId == roomsId); 
             return results;
         }
 

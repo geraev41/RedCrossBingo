@@ -6,17 +6,17 @@ namespace  RedCrossBingo.GraphQL.Types
 {
     class BingoNumbersType : ObjectGraphType<BingoNumbers>
     {
-        public BingoNumbersType (BingonumberRepository b)
+        public BingoNumbersType (RoomsRepository b)
         {
             Name = "Numbers";
             Field(x => x.Id);
             Field(x => x.number);
             Field(x => x.IsChosen);
             Field(x => x.RoomsId);
-            Field<ListGraphType<RoomsType>>(
-                 "rooms",
+            Field<RoomsType>(
+                 "room",
                  resolve: context => {
-                     return b.numberFromRooms((context.Source.RoomsId));
+                     return b.Find((context.Source.RoomsId));
                  }
             );
 
