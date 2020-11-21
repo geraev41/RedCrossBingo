@@ -7,12 +7,14 @@ namespace RedCrossBingo.GraphQL{
     {
         public RedCrossBingoQuery(BingocardsRepository b, 
         BingocardsnumbersRepository numbersRepo,
-        BingonumberRepository bingoNum
+        BingonumberRepository bingoNum,
+        RoomsRepository rooms
          )
         {
            ShowCards(b); 
            ShowCardsNumbers(numbersRepo); 
            ShowNumbers(bingoNum);
+           ShowRooms(rooms);
         }
       
         private void ShowCards(BingocardsRepository b ){
@@ -32,6 +34,13 @@ namespace RedCrossBingo.GraphQL{
 
         private void ShowNumbers(BingonumberRepository b ){
              Field<ListGraphType<BingoNumbersType>>("bingoNum",
+                resolve: context => {
+                return b.All(context);
+            });
+        }
+
+        private void ShowRooms(RoomsRepository b ){
+             Field<ListGraphType<RoomsType>>("roomsRep",
                 resolve: context => {
                 return b.All(context);
             });
