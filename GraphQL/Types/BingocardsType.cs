@@ -12,7 +12,6 @@ namespace  RedCrossBingo.GraphQL.Types
             Field(x => x.Id);
             Field(x => x.RoomsId);
             Field(x => x.IsPlaying);
-
             Field<ListGraphType<BingocardsnumbersType>>(
                 "numbers",
                 resolve: context => {

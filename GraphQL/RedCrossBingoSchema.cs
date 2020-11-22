@@ -7,7 +7,7 @@ namespace  RedCrossBingo.GraphQL {
         public RedCrossBingoSchema(IDependencyResolver resolver) : base(resolver)
         {
             Query = resolver.Resolve<RedCrossBingoQuery>(); 
-          //  Mutation = resolver.Resolve<BookstoreMutation>(); 
+            Mutation = resolver.Resolve<RedCrossBingoMutation>(); 
         }
     }
 }
