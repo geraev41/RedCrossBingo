@@ -9,7 +9,8 @@ namespace  RedCrossBingo.GraphQL {
     {
         public RedCrossBingoMutation(BingocardsRepository bcardRepository, 
         BingocardsnumbersRepository bcardNumberRepository,
-        RoomsRepository roomsRepository
+        RoomsRepository roomsRepository,
+        BingonumberRepository bnumberRepository
         )
         {
             CreateRoom(roomsRepository); 
@@ -17,6 +18,8 @@ namespace  RedCrossBingo.GraphQL {
             CreateBingoCardNumber(bcardNumberRepository);  
             UpdateNumber(bcardNumberRepository); 
             DeleteRoom(roomsRepository); 
+            CreateBingoNumber(bnumberRepository);
+            UpdateBingoNumber(bnumberRepository);
         }
 
         private void CreateRoom(RoomsRepository roomRepository){
@@ -45,6 +48,14 @@ namespace  RedCrossBingo.GraphQL {
 
         }
 
+        private void CreateBingoNumber(BingonumberRepository bingonumberRepository){
+            Field<BingoNumbersType>("createBingoNumber",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<BingoNumbersInputType>> { Name = "input" }),
+                resolve: context => {
+                return bingonumberRepository.Add(context.GetArgument<BingoNumbers>("input"));
+            });
+
+        }
 
         private void UpdateNumber(BingocardsnumbersRepository b){
             Field<BingocardsnumbersType>("updateNumber",
@@ -67,5 +78,21 @@ namespace  RedCrossBingo.GraphQL {
                     return r.Remove(context.GetArgument<long>("id"));
             });
         }
+
+       
+        private void UpdateBingoNumber(BingonumberRepository b){
+            Field<BingoNumbersType>("updateBingoNumber",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" },
+                    new QueryArgument<NonNullGraphType<BingoNumbersInputType>> { Name = "input" }
+                ),
+                resolve: context => {
+                var id = context.GetArgument<long>("id");
+                var isChosen = context.GetArgument<BingoNumbers>("input");
+                return b.Update(id, isChosen);
+            });
+        }
+
+
     }
 }
