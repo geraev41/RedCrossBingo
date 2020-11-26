@@ -8,7 +8,8 @@ namespace RedCrossBingo.GraphQL{
         public RedCrossBingoQuery(BingocardsRepository b, 
         BingocardsnumbersRepository numbersRepo,
         BingonumberRepository bingoNum,
-        RoomsRepository rooms
+        RoomsRepository rooms,
+        UserRepository user
          )
         {
            ShowCards(b); 
@@ -17,6 +18,8 @@ namespace RedCrossBingo.GraphQL{
            ShowRooms(rooms);
            GetNumberForTombola(bingoNum); 
            GetRoomForName(rooms); 
+           ShowUsers(user);
+          
         }
       
         private void ShowCards(BingocardsRepository b ){
@@ -69,5 +72,27 @@ namespace RedCrossBingo.GraphQL{
                 return r.GetRoomName(userId, name);
             });
         }
+
+        private void ShowUsers(UserRepository b ){
+             Field<ListGraphType<UsersType>>("users",
+                                             arguments: new QueryArguments(
+                                                 
+                                                 new QueryArgument<StringGraphType> { Name = "email" },
+                                                 new QueryArgument<StringGraphType> { Name = "password" }
+                                             ),
+                                             resolve: context => {
+                                                 var email = context.GetArgument<string>("email");
+                                                var password = context.GetArgument<string>("password");
+                                                 return b.All(context,email,password);
+                                             });
+        }
+
+        
+
+        
+
+
+
+
     }
 }
