@@ -16,11 +16,12 @@
                         src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" />
                     <h3 class="title">Costa Rican Red Cross </h3>
                     <p class="text-muted"> Please enter the information requested!</p>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <input type="email" id="email" name="email" placeholder="Enter your email"
+                     required autofocus [(ngModel)]="email_filter">
+                    <input type="password" id="password" name="password" placeholder="Enter your password"
+                     required [(ngModel)]="password_filter">
 
-                    <input type="submit" name="" value="Check in" >
-                     
+                    <input type="submit" name="" value="Check in" (click)="login()">                    
                 </form>
             </div>
         </div>

@@ -30,6 +30,9 @@ import { MainplayerComponent } from './mainplayer/mainplayer.component';
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+
+      { path: 'login', component: LoginComponent },
+
       { path: 'player', component: MainplayerComponent },
 
     ]),
