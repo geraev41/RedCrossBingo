@@ -11,6 +11,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { GraphQLModule } from './graphql.module';
 
 import { LoginComponent } from './login/login.component';
+import { MainplayerComponent } from './mainplayer/mainplayer.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LoginComponent } from './login/login.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    LoginComponent
+    LoginComponent, 
+    MainplayerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,7 +30,11 @@ import { LoginComponent } from './login/login.component';
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+
       { path: 'login', component: LoginComponent },
+
+      { path: 'player', component: MainplayerComponent },
+
     ]),
     GraphQLModule
   ],
