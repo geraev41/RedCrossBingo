@@ -13,10 +13,10 @@ import { GraphQLModule } from './graphql.module';
 import { LoginComponent } from './login/login.component';
 import { MainplayerComponent } from './mainplayer/mainplayer.component';
 import {MainadminComponent} from './mainadmin/mainadmin.component';
+import {GameComponent} from './game/game.component';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import {AuthService} from './services/auth.service';
-import { from } from 'rxjs';
 
 
 export function tokenGetter() {
@@ -36,7 +36,8 @@ export function tokenGetter() {
     FetchDataComponent,
     LoginComponent, 
     MainplayerComponent,
-    MainadminComponent
+    MainadminComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -50,6 +51,8 @@ export function tokenGetter() {
       { path: 'login', component: LoginComponent },
       { path: 'player', component: MainplayerComponent },
       { path: 'admin', component: MainadminComponent, canActivate: [AuthService] },
+      { path: 'game', component: GameComponent },
+
     ]),
     GraphQLModule,
     JwtModule.forRoot({
