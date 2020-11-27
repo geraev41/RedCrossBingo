@@ -7,6 +7,7 @@ namespace RedCrossBingo.Models
         public long Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string Token { get; set; }
         public List<Rooms> Rooms { get; set; } = new List<Rooms>();
 
     }

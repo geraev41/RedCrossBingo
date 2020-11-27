@@ -34,6 +34,7 @@ export class LoginComponent  {
       }else if(result.data){
         swal("Log in!", "Email or password incorrect!", "warning");       
       }
+      
     });
    }
 

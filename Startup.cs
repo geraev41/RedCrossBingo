@@ -13,6 +13,10 @@ using RedCrossBingo.GraphQL;
 using GraphQL.Server;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using GraphQL.Server.Ui.Playground;
+using Microsoft.AspNetCore.Authentication.JwtBearer; 
+using  Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 
 namespace RedCrossBingo
@@ -29,6 +33,15 @@ namespace RedCrossBingo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Add cors
+             services.AddCors(options=> {
+                options.AddPolicy("EnableCORS",builder =>{
+                    builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            }); 
+
             services.AddDbContext<DataBaseContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention());
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
@@ -55,6 +68,24 @@ namespace RedCrossBingo
             services.Configure<KestrelServerOptions>(options =>
             {
                 options.AllowSynchronousIO = true;
+            });
+
+             //JWT 
+            services.AddAuthentication(opt=>{
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options=>{
+                options.TokenValidationParameters = new TokenValidationParameters{
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true, 
+                    ValidateIssuerSigningKey = true, 
+
+                    ValidIssuer = "https://localhost:5001",
+                    ValidAudience = "https://localhost:5001",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
+                };
             });
         }
 
