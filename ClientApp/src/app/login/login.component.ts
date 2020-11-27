@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import {USERS_QUERY} from './queries';
 import {Login} from './login.interface';
 import {Apollo} from 'apollo-angular';
-
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +15,9 @@ export class LoginComponent  {
   password_filter:'';
 
   constructor(private apollo: Apollo) {
-    this.login();
+    
    }
+
 
    login(){
      this.apollo.watchQuery({
@@ -27,10 +28,11 @@ export class LoginComponent  {
         password:this.password_filter
        }
      }).valueChanges.subscribe(result =>{
-      if(result){
-        alert("es correcto");
-      }else if(!result){
-        alert("no coincide");
+      if(result.data.login){
+        swal("Log in!", "You have successfully logged in!", "success");
+        window.location.href = 'https://localhost:5001/counter';
+      }else if(result.data){
+        swal("Log in!", "Email or password incorrect!", "warning");       
       }
     });
    }

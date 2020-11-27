@@ -74,7 +74,7 @@ namespace RedCrossBingo.GraphQL{
         }
 
         private void ShowUsers(UserRepository b ){
-             Field<ListGraphType<UsersType>>("users",
+             Field<UsersType>("login",
                                              arguments: new QueryArguments(
                                                  
                                                  new QueryArgument<StringGraphType> { Name = "email" },
@@ -83,7 +83,7 @@ namespace RedCrossBingo.GraphQL{
                                              resolve: context => {
                                                  var email = context.GetArgument<string>("email");
                                                 var password = context.GetArgument<string>("password");
-                                                 return b.All(context,email,password);
+                                                 return b.Login(context,email,password);
                                              });
         }
 
