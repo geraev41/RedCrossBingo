@@ -6,6 +6,7 @@ query($email:String, $password:String){
       id
       email
       password
+      token
     }
   }
 `;

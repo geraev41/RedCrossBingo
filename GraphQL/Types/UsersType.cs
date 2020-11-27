@@ -12,6 +12,7 @@ namespace  RedCrossBingo.GraphQL.Types
             Field(x => x.Id);
             Field(x => x.Email);
             Field(x => x.Password);
+            Field(x => x.Token); 
         }
     }
 }

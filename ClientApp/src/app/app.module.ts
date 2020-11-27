@@ -12,6 +12,18 @@ import { GraphQLModule } from './graphql.module';
 
 import { LoginComponent } from './login/login.component';
 import { MainplayerComponent } from './mainplayer/mainplayer.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import {AuthService} from './services/auth.service';
+
+
+export function tokenGetter() {
+  let result: [];
+   result = JSON.parse(sessionStorage.getItem('user'));
+   if(result){
+     return result['token'];
+   }
+   return "";
+}
 
 @NgModule({
   declarations: [
@@ -28,7 +40,7 @@ import { MainplayerComponent } from './mainplayer/mainplayer.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
+      { path: 'counter', component: CounterComponent, canActivate: [AuthService] },
       { path: 'fetch-data', component: FetchDataComponent },
 
       { path: 'login', component: LoginComponent },
@@ -36,9 +48,16 @@ import { MainplayerComponent } from './mainplayer/mainplayer.component';
       { path: 'player', component: MainplayerComponent },
 
     ]),
-    GraphQLModule
+    GraphQLModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['https://localhost:5001/'],
+        disallowedRoutes:[]
+      }
+    })
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

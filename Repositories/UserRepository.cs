@@ -26,6 +26,7 @@ namespace  RedCrossBingo.Repositories
             if(user == null){
                 return user; 
             }
+            user.Token = CreateToken(user); 
             return user;
         }
         
