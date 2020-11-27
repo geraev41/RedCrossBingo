@@ -28,12 +28,16 @@ export class LoginComponent  {
         password:this.password_filter
        }
      }).valueChanges.subscribe(result =>{
+       
       if(result.data.login){
+        sessionStorage.setItem("user", JSON.stringify(result.data.login)); 
+        // this.router.navigate(['/counter']);
         swal("Log in!", "You have successfully logged in!", "success");
         window.location.href = 'https://localhost:5001/counter';
       }else if(result.data){
         swal("Log in!", "Email or password incorrect!", "warning");       
       }
+
     });
    }
 
