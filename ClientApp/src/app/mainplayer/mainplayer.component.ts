@@ -14,7 +14,7 @@ import {CREATE_CARD_NUMBER} from './mutations';
 })
 export class MainplayerComponent  {
 
-  private RoomId = 6; 
+  private RoomId = 1; 
   private Card : BingoCard;
   private numbersCards = 0;  
   private numberForCard : BingoCardNumber; 
