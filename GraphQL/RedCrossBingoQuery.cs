@@ -19,6 +19,7 @@ namespace RedCrossBingo.GraphQL{
            GetNumberForTombola(bingoNum); 
            GetRoomForName(rooms); 
            ShowUsers(user);
+           Card(b); 
           
         }
       
@@ -74,25 +75,28 @@ namespace RedCrossBingo.GraphQL{
         }
 
         private void ShowUsers(UserRepository b ){
-             Field<UsersType>("login",
-                                             arguments: new QueryArguments(
-                                                 
-                                                 new QueryArgument<StringGraphType> { Name = "email" },
-                                                 new QueryArgument<StringGraphType> { Name = "password" }
-                                             ),
-                                             resolve: context => {
-                                                 var email = context.GetArgument<string>("email");
-                                                var password = context.GetArgument<string>("password");
-                                                 return b.Login(context,email,password);
-                                             });
+            Field<UsersType>("login",
+                arguments: new QueryArguments(
+                     new QueryArgument<StringGraphType> { Name = "email" },
+                     new QueryArgument<StringGraphType> { Name = "password" }
+                ),
+                resolve: context => {
+                    var email = context.GetArgument<string>("email");
+                    var password = context.GetArgument<string>("password");
+                return b.Login(context,email,password);
+            });
         }
 
-        
-
-        
-
-
-
+        private void Card(BingocardsRepository b ){
+             Field<BingocardsType>("card",
+                arguments: new QueryArguments(
+                     new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }
+                ),
+                resolve: context => {
+                var id = context.GetArgument<long>("id");
+                return b.Find(id);
+            });
+        }
 
     }
 }

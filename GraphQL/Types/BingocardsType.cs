@@ -13,7 +13,7 @@ namespace  RedCrossBingo.GraphQL.Types
             Field(x => x.RoomsId);
             Field(x => x.IsPlaying);
             Field<ListGraphType<BingocardsnumbersType>>(
-                "numbers",
+                "bingoCardNumbers",
                 resolve: context => {
                     return b.GetNumbersForCardBingo(context.Source.Id);
                 }
