@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+</head>
+<body>
+    <div class="newNumber" >
+        <img id="imagTom" class="rounded-circle profile-img-card"
+        src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" /><br>
+        <button mat-raised-button class="btn btn-info" (click)="save()" >Generate tombola</button>
+         <h1>5465</h1>     
+        <button mat-raised-button class="btn btn-info">New number</button>   
+
+    </div>  
+
+    <div class="usersPla" >
+        <img id="imag" class="rounded-circle profile-img-card"
+        src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" /><br>
+        <h5  >Users playing</h5>     
+         <h5 >54647</h5>     
+    </div> 
+
+    <div  id="cardBingoPri" class="card" > 
+           <img id="imagenT" class="rounded-circle profile-img-card"
+           src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" /><br>
+           <h5>Numbers played</h5>
+           <div id="cardNumberT" *ngFor= "let n of number">        
+                 <h6 id="numberT" class="card-body"><b> {{n.number}}</b></h6>            
+       </div>
+   </div>
+
+
+
+
+</body>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+    integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+    integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+    integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+    crossorigin="anonymous"></script>
+
+</html>
+
+
+
+

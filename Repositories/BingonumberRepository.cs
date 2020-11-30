@@ -15,9 +15,16 @@ namespace  RedCrossBingo.Repositories
         }
 
         public IEnumerable<BingoNumbers> All(ResolveFieldContext<object> context){
-            var results = from numbers in _context.BingoNumbers select numbers;
+            var results = from numbers in _context.BingoNumbers select numbers;           
             return results;
         }
+
+        public IEnumerable<BingoNumbers> AllNumberTrue(ResolveFieldContext<object> context){
+            var results = from numbers in _context.BingoNumbers select numbers; 
+            results = results.Where( r=> r.IsChosen == true);     
+            return results;
+        }
+
 
         public BingoNumbers Find(long id){
            return  _context.BingoNumbers.Find(id); 
@@ -32,13 +39,6 @@ namespace  RedCrossBingo.Repositories
         public IEnumerable<Rooms> numberFromRooms(long numberId){
             var results = from rooms in _context.Rooms select rooms;
             results = results.Where(a => a.Id == numberId); 
-            return results;
-        }
-
-          public IEnumerable<BingoNumbers>  GetNumberTrue(bool isChoose)
-        {
-            var results = from numbers in _context.BingoNumbers select numbers;
-            results = results.Where( r=> r.IsChosen == isChoose);  
             return results;
         }
 
