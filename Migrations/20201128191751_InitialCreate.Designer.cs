@@ -9,7 +9,7 @@ using RedCrossBingo.Models;
 namespace RedCrossBingo.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20201123195459_InitialCreate")]
+    [Migration("20201128191751_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,6 +146,10 @@ namespace RedCrossBingo.Migrations
 
                     b.Property<string>("Password")
                         .HasColumnName("password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Token")
+                        .HasColumnName("token")
                         .HasColumnType("text");
 
                     b.HasKey("Id")

@@ -14,7 +14,8 @@ namespace RedCrossBingo.Migrations
                     id = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     email = table.Column<string>(nullable: true),
-                    password = table.Column<string>(nullable: true)
+                    password = table.Column<string>(nullable: true),
+                    token = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

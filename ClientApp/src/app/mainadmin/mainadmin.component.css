@@ -1,33 +1,76 @@
-.btnGenerate {
-    margin-left: 40%; 
-}
-
-table{
-         
-    top: 50%;
-    left: 50%; 
-    text-align: center;  
-    margin-top: 0.5vh;                      
-    margin-left: 15%;  
-   color: white;
-    box-shadow: -1px 1px 50px 10px rgb(0, 0, 0); 
-    border-radius: 10px 0px 20px 0px;
-    opacity: 97%;
-    background-color: rgb(32, 93, 95);
-}
-
-.divRoom{
-    color: white;
-    box-shadow: -1px 1px 50px 10px rgb(0, 0, 0); 
-    border-radius: 10px 0px 20px 0px;
-    opacity: 97%;
-    background-color: rgb(32, 93, 95);
-}
-
-.search{
-    background-color:rgb(199, 248, 250);
+#profile-img {
+    height:110px;
 }
 
 h3{
-    text-align: center;
+    color: white;
 }
+.box {
+     width: 85vh;      
+    top: 50%;
+    left: 50%; 
+    text-align: center;  
+    margin-top: 10vh;                      
+    margin-left: 50%;  
+    padding: 25px ;
+    box-shadow: -1px 1px 50px 10px rgb(0, 0, 0); 
+    border-radius: 10px 0px 20px 0px;
+    opacity: 92%;
+    background-color: black;
+  height: auto;
+  word-wrap: break-word;
+}
+
+
+.box input[type="text"]{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+
+
+
+.box input[type="text"]:focus{
+    width: 300px;
+    border-color: rgb(20, 238, 31)
+}
+
+
+
+.box input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #db8b41;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer
+}
+
+
+
+
+.box input[type="submit"]:hover {
+    background: #db8b41
+}
+
+table{
+    color: rgb(129, 250, 139);
+}
+
+
+
