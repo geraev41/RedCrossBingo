@@ -116,8 +116,8 @@ validateRoom(){
     }
   });
  }
+
  openRoom(r : Rooms){
-   //Redirect to the tombola
    var url = `${this.baseUrl}${'tombola/'}${r.name}`
    window.open(url); 
  }
