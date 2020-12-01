@@ -49,7 +49,7 @@ export function tokenGetter() {
       { path: 'fetch-data', component: FetchDataComponent },
 
       { path: 'login', component: LoginComponent },
-      { path: 'player', component: MainplayerComponent },
+      { path: 'player/:room', component: MainplayerComponent },
       { path: 'admin', component: MainadminComponent, canActivate: [AuthService] },
       { path: 'game', component: GameComponent },
 

@@ -66,10 +66,10 @@ namespace  RedCrossBingo.Repositories
             return b;
         }
 
-        public  Rooms GetRoomName(long iduser, string name)
+        public  Rooms GetRoomName(string name)
         {
             var results = from rooms in _context.Rooms select rooms;
-           var room = results.SingleOrDefault(e => e.UsersId == iduser && e.Name == name); 
+           var room = results.SingleOrDefault(e => e.Name == name); 
            return room;
         }
 

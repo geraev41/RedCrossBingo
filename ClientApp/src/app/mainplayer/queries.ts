@@ -16,3 +16,14 @@ export const BINGOCARD = gql`
         }
     }
 `;
+
+
+
+export const ROOM_NAME = gql`
+    query room($name: String!){
+        getRoomName(name: $name){
+            id
+            name
+        }
+    }
+`;

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { threadId } from 'worker_threads';
+import { ActivatedRoute } from '@angular/router';
 import { BingoCard } from './bingocard.interface';
 import { BingoCardNumber } from './bingocardnumber.interface';
 import {CREATE_CARD} from './mutations'; 
 import {CREATE_CARD_NUMBER} from './mutations'; 
-
+import {ROOM_NAME} from './queries';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-mainplayer',
@@ -14,13 +15,14 @@ import {CREATE_CARD_NUMBER} from './mutations';
 })
 export class MainplayerComponent  {
 
-  private RoomId = 1; 
+  private RoomId = 0; 
   private Card : BingoCard;
   private numbersCards = 0;  
   private numberForCard : BingoCardNumber; 
 
-  constructor( private Apollo: Apollo) {
+  constructor( private Apollo: Apollo,private _route: ActivatedRoute,private route: Router) {
     this.newCard(); 
+    this.getRoom(); 
 
    }
 
@@ -44,10 +46,15 @@ export class MainplayerComponent  {
   
 
   createCards(){
+    if(this.RoomId == 0){
+      alert("You changed the url name!"); 
+      return; 
+    }
     for (let  i = 0; i < this.numbersCards; i++) {
       this.saveBingoCard();
       this.newCard(); 
     }
+    this.route.navigate(['game']); 
   }
 
   saveBingoCard(){
@@ -62,7 +69,6 @@ export class MainplayerComponent  {
       this.newNumberForCard(); 
       this.generateNumbers(); 
       this.saveIdCardInSessionStorage(this.Card.id); 
-
     }); 
   }
 
@@ -119,6 +125,21 @@ saveIdCardInSessionStorage(id_card: number){
 
      }
     sessionStorage.setItem("listCards", JSON.stringify(data)); 
+}
+
+getRoom(){
+  var room = this._route.snapshot.paramMap.get("room");
+  this.Apollo.watchQuery({
+    query : ROOM_NAME,
+    fetchPolicy: 'network-only',
+    variables: {
+      name: room
+    }
+  }).valueChanges.subscribe(result=>{
+    if(result.data.getRoomName){
+      this.RoomId = result.data.getRoomName.id; 
+    }
+  }); 
 }
 
 }

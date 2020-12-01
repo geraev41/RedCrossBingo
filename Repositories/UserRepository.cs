@@ -48,7 +48,7 @@ namespace  RedCrossBingo.Repositories
                 issuer : "https://localhost:5001",
                 audience: "https://localhost:5001",
                 claims : claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: signingCredentials
             );
             token = new JwtSecurityTokenHandler().WriteToken(tokenOptions); 
