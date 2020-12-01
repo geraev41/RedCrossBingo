@@ -11,7 +11,7 @@ import { Apollo } from 'apollo-angular';
 })
 export class GameComponent implements OnInit {
 
-  private cardsTest: number[] = [4,5,6]; 
+  private cardsTest: number[] = [8,7,9]; 
 
   private cards: BingoCard[]; 
   constructor(private Apollo: Apollo) {

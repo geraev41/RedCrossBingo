@@ -43,10 +43,10 @@ newRoom(){
 }
 
 createRoom(){
-  
   try {
     this.validateRoom(); 
     this.save(); 
+    this.newRoom(); 
   } catch (error) {
     this.error = error.message;
     setTimeout(()=> {
@@ -56,7 +56,7 @@ createRoom(){
 }
 
 save(){
-   var newUrl = this.baseUrl+this.room.name; 
+  var newUrl =  `${this.baseUrl}${'player/'}${this.room.name}`
   const variables = {
     input: {name: this.room.name, url: newUrl, usersId:this.userLogueado.id} 
   };
@@ -64,7 +64,6 @@ save(){
     mutation : CREATE_ROOM,
     variables: variables
   }).subscribe(result=>{
-    console.log(result.data); 
     this.getRooms(); 
   }); 
 }
@@ -73,13 +72,15 @@ save(){
 validateRoom(){
   this.error = ''; 
   var name = this.room.name.toLowerCase().trim().replace(/ /g, "");
-  if(name== ''){
+  if(name == ''){
     throw new Error("You must write name of the room!");
   }
 
+  if(this.rooms.find(x=> x.name == name)){
+    throw new Error("The name of this room already exists!");
+  }
   this.room.name = name; 
 }
-
  getRooms(){
   this.apollo.watchQuery({
     query: ROOMS_QUERY,
@@ -87,7 +88,6 @@ validateRoom(){
     variables:{}
   }).valueChanges.subscribe(result=>{
     this.rooms= result.data.roomsRep;
-    console.log(this.rooms);
   })
  }
 
@@ -116,9 +116,10 @@ validateRoom(){
     }
   });
  }
-
-
-
-
+ openRoom(r : Rooms){
+   //Redirect to the tombola
+   var url = `${this.baseUrl}${'tombola/'}${r.name}`
+   window.open(url); 
+ }
 
 }
