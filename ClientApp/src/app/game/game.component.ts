@@ -11,8 +11,6 @@ import { Apollo } from 'apollo-angular';
 })
 export class GameComponent implements OnInit {
 
-  private cardsTest: number[] = [8,7,9]; 
-
   private cards: BingoCard[]; 
   constructor(private Apollo: Apollo) {
     this.cards = []; 
@@ -24,14 +22,15 @@ export class GameComponent implements OnInit {
 
 
   searchInStorage(){
-     this.cardsTest.forEach(id => {
-      this.loadCards(id); 
-     });
+    let ids= JSON.parse(sessionStorage.getItem("listCards")); 
+    let list =ids.values as [];
+    for (let i = 0; i <list.length; i++) {
+       this.loadCards(list[i]); 
+    }
   }
 
 
   loadCards(id_card){
-    
     this.Apollo.watchQuery({
       query : BINGOCARD,
       fetchPolicy: 'network-only',
@@ -39,7 +38,6 @@ export class GameComponent implements OnInit {
         id: id_card
       }
     }).valueChanges.subscribe(result=>{
-      console.log(result.data.card); 
         this.cards.push(result.data.card); 
     }); 
   }

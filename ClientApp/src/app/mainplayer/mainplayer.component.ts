@@ -7,6 +7,7 @@ import {CREATE_CARD} from './mutations';
 import {CREATE_CARD_NUMBER} from './mutations'; 
 import {ROOM_NAME} from './queries';
 import {Router} from '@angular/router';
+import { Rooms } from '../mainadmin/mainadmin.interface';
 
 @Component({
   selector: 'app-mainplayer',
@@ -16,6 +17,7 @@ import {Router} from '@angular/router';
 export class MainplayerComponent  {
 
   private RoomId = 0; 
+  private room : Rooms; 
   private Card : BingoCard;
   private numbersCards = 0;  
   private numberForCard : BingoCardNumber; 
@@ -54,7 +56,8 @@ export class MainplayerComponent  {
       this.saveBingoCard();
       this.newCard(); 
     }
-    this.route.navigate(['game']); 
+   // console.log('https://localhost:5001/game/'+this.room.name);
+     window.location.href ='https://localhost:5001/game/'+this.room.name; 
   }
 
   saveBingoCard(){
@@ -138,6 +141,7 @@ getRoom(){
   }).valueChanges.subscribe(result=>{
     if(result.data.getRoomName){
       this.RoomId = result.data.getRoomName.id; 
+      this.room = result.data.getRoomName; 
     }
   }); 
 }
