@@ -4,6 +4,7 @@ import {Login} from './login.interface';
 import {Apollo} from 'apollo-angular';
 import swal from 'sweetalert';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,7 +34,7 @@ export class LoginComponent  {
         sessionStorage.setItem("user", JSON.stringify(result.data.login)); 
         // this.router.navigate(['/counter']);
         swal("Log in!", "You have successfully logged in!", "success");
-        window.location.href = 'https://localhost:5001/admin';
+        window.location.href = 'https://localhost:5001/maintombola';
       }else if(result.data){
         swal("Log in!", "Email or password incorrect!", "warning");       
       }

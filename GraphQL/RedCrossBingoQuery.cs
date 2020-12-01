@@ -15,6 +15,7 @@ namespace RedCrossBingo.GraphQL{
            ShowCards(b); 
            ShowCardsNumbers(numbersRepo); 
            ShowNumbers(bingoNum);
+           ShowNumbersTrue(bingoNum);
            ShowRooms(rooms);
            GetNumberForTombola(bingoNum); 
            GetRoomForName(rooms); 
@@ -39,9 +40,16 @@ namespace RedCrossBingo.GraphQL{
         }
 
         private void ShowNumbers(BingonumberRepository b ){
-             Field<ListGraphType<BingoNumbersType>>("bingoNum",
+             Field<ListGraphType<BingoNumbersType>>("bingoNum",            
                 resolve: context => {
                 return b.All(context);
+            });
+        }
+      
+      private void ShowNumbersTrue(BingonumberRepository b ){
+             Field<ListGraphType<BingoNumbersType>>("bingoNumTrue",            
+                resolve: context => {
+                return b.AllNumberTrue(context);
             });
         }
 
@@ -60,6 +68,7 @@ namespace RedCrossBingo.GraphQL{
                 return b.GetNumber(1, 14);
             });
         }
+
 
         private void GetRoomForName(RoomsRepository r ){
              Field<RoomsType>("getRoomName",
@@ -95,6 +104,10 @@ namespace RedCrossBingo.GraphQL{
                 return b.Find(id);
             });
         }
+
+
+
+
 
     }
 }

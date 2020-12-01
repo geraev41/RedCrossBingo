@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { MainplayerComponent } from './mainplayer/mainplayer.component';
 import {MainadminComponent} from './mainadmin/mainadmin.component';
 import {GameComponent} from './game/game.component';
+import {MaintombolaComponent} from './maintombola/maintombola.component';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import {AuthService} from './services/auth.service';
@@ -37,7 +38,8 @@ export function tokenGetter() {
     LoginComponent, 
     MainplayerComponent,
     MainadminComponent,
-    GameComponent
+    GameComponent,
+    MaintombolaComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -52,6 +54,7 @@ export function tokenGetter() {
       { path: 'player/:room', component: MainplayerComponent },
       { path: 'admin', component: MainadminComponent, canActivate: [AuthService] },
       { path: 'game', component: GameComponent },
+      { path: 'maintombola', component: MaintombolaComponent },
 
     ]),
     GraphQLModule,
