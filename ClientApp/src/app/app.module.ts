@@ -54,7 +54,7 @@ export function tokenGetter() {
       { path: 'player/:room', component: MainplayerComponent },
       { path: 'admin', component: MainadminComponent, canActivate: [AuthService] },
       { path: 'game', component: GameComponent },
-      { path: 'maintombola', component: MaintombolaComponent },
+      { path: 'tombola/:room', component: MaintombolaComponent, canActivate: [AuthService] },
 
     ]),
     GraphQLModule,
