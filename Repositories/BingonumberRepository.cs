@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GraphQL.Types;
+using System;
 
 namespace  RedCrossBingo.Repositories
 {
@@ -24,6 +25,15 @@ namespace  RedCrossBingo.Repositories
             results = results.Where( r=> r.IsChosen == true);     
             return results;
         }
+
+        public BingoNumbers NumberFalse(long number){                    
+            var results = from numbers in _context.BingoNumbers select numbers; 
+            var bingo = results.SingleOrDefault(x=> x.number==number && x.IsChosen==false);    
+            return bingo;           
+        }
+
+ 
+
 
 
         public BingoNumbers Find(long id){
@@ -49,19 +59,6 @@ namespace  RedCrossBingo.Repositories
             return results;
         }
 
-        public BingoNumbers GetNumber(long roomsId, long number)
-        {
-            var results = from numbers in _context.BingoNumbers select numbers;
-            var bingo = results.Single(x=> x.RoomsId == roomsId && x.number == number); 
-            // foreach (var cr in cards.Where(e => e.RoomsId == roomsId && e.number==number))
-            // {
-            //     bingo.Id = cr.Id;
-            //     bingo.number= cr.number;
-            //     bingo.RoomsId = cr.RoomsId;               
-            // }
-            
-           return bingo;
-        }
 
   public async Task<BingoNumbers> Update(long id, BingoNumbers b) {
             b.Id = id;

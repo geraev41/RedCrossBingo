@@ -11,8 +11,8 @@
         <img id="imagTom" class="rounded-circle profile-img-card"
         src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" /><br>
         <button mat-raised-button class="btn btn-info" (click)="save()" >Generate tombola</button>
-         <h1>5465</h1>     
-        <button mat-raised-button class="btn btn-info">New number</button>   
+         <h1>{{numberPlaying}}</h1>     
+        <button mat-raised-button class="btn btn-info" (click)="getNumbers()">New number</button>   
 
     </div>  
 
@@ -27,8 +27,8 @@
            <img id="imagenT" class="rounded-circle profile-img-card"
            src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" /><br>
            <h5>Numbers played</h5>
-           <div id="cardNumberT" *ngFor= "let n of number">        
-                 <h6 id="numberT" class="card-body"><b> {{n.number}}</b></h6>            
+           <div id="cardNumberT" *ngFor= "let n of newNumber">        
+                 <h6 id="numberT" class="card-body"><b> {{n}}</b></h6>            
        </div>
    </div>
 
