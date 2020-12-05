@@ -4,6 +4,9 @@ import {MainTombola} from './maintombola.interface';
 import {CREATE_NUMBERS} from './mutations';
 import {NUMBERS_TRUE_QUERY} from './queries';
 import swal from 'sweetalert';
+import { Rooms } from '../mainadmin/mainadmin.interface';
+import { ActivatedRoute } from '@angular/router';
+import {ROOM_NAME} from './../mainplayer/queries';
 
 @Component({
   selector: 'app-maintombola',
@@ -14,8 +17,10 @@ export class MaintombolaComponent {
 
   number:MainTombola[];
   createNumber: MainTombola
+  private room : Rooms; 
 
-  constructor(private apollo: Apollo) { 
+  constructor(private apollo: Apollo,private _route: ActivatedRoute) { 
+    this.getRoom();
     this.getNumbersTrue();
   }
 
@@ -25,7 +30,7 @@ export class MaintombolaComponent {
       input:{
         number: i,
         isChosen: false,
-        roomsId:1
+        roomsId:this.room.id
       }
     }
     
@@ -47,6 +52,16 @@ export class MaintombolaComponent {
       this.number= result.data.bingoNumTrue;
     })
    }
-
-
+   getRoom(){
+    var room = this._route.snapshot.paramMap.get("room");
+    this.apollo.watchQuery({
+      query : ROOM_NAME,
+      fetchPolicy: 'network-only',
+      variables: {
+        name: room
+      }
+    }).valueChanges.subscribe(result=>{
+        this.room = result.data.getRoomName; 
+    }); 
+  }
 }
