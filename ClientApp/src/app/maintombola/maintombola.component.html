@@ -12,8 +12,7 @@
         src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" /><br>
         <button mat-raised-button class="btn btn-info" (click)="save()" >Generate tombola</button>
          <h1>{{numberPlaying}}</h1>     
-        <button mat-raised-button class="btn btn-info" (click)="getNumbers()">New number</button>   
-
+        <button mat-raised-button class="btn btn-info" (click)="getNumbers()">New number</button>      
     </div>  
 
     <div class="usersPla" >
@@ -30,10 +29,15 @@
            <div id="cardNumberT" *ngFor= "let n of newNumber">        
                  <h6 id="numberT" class="card-body"><b> {{n}}</b></h6>            
        </div>
+       <div id="contenedor">
+        <div id="barra">
+          <div id="texto"></div>
+          
+        </div>
+      </div>
    </div>
 
-
-
+  
 
 </body>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
