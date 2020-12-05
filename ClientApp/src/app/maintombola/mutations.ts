@@ -10,3 +10,14 @@ mutation($input:BingoNumbersInput!){
     }
   }
 `;
+
+export const UPDATE_NUMBER = gql`
+    mutation($id: ID!, $input: BingoNumbersInput!) {
+      updateBingoNumber(id: $id, input: $input) {
+            id
+            number
+            isChosen
+           
+        }
+    }
+`;

@@ -9,3 +9,14 @@ query{
   }
 }
 `;
+
+export const NUMBERS_FALSE_QUERY = gql`
+query($number:Int!){
+  bingoNumFalse(number:$number){
+    id
+    number
+    isChosen
+    roomsId
+  }
+}
+`;
