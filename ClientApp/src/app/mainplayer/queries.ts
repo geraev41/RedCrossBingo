@@ -26,6 +26,7 @@ export const BINGOCARDID = gql`
             bingoCardNumbers{
                 id
                 number
+                isSelected
             }
         }
     }

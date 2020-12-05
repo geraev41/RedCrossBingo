@@ -8,6 +8,9 @@ import {CREATE_CARD_NUMBER} from './mutations';
 import {ROOM_NAME, BINGOCARDID} from './queries';
 import {Router} from '@angular/router';
 import { Rooms } from '../mainadmin/mainadmin.interface';
+import {MainTombola } from './../maintombola/maintombola.interface';
+import {NUMBERS_TRUE_QUERY } from './../maintombola/queries';
+
 
 @Component({
   selector: 'app-mainplayer',
@@ -23,12 +26,29 @@ export class MainplayerComponent  {
   private numberForCard : BingoCardNumber;
   private isCard = false; 
   private cards : BingoCard[];
+  private progressbar = false; 
+  private hiddenButton = false; 
+  private numberTombola : MainTombola[]; 
 
   constructor( private Apollo: Apollo,private _route: ActivatedRoute,private route: Router) {
     this.newCard(); 
     this.getRoom(); 
     this.cardsInSessionStorage(); 
+    this.getNumbersTombola(); 
    }
+
+getNumbersTombola(){
+  this.Apollo.watchQuery({
+    query : NUMBERS_TRUE_QUERY,
+    fetchPolicy: 'network-only',
+    variables: {
+    }
+  }).valueChanges.subscribe(result=>{
+    console.log(result); 
+    this.numberTombola= result.data['bingoNumTrue']; 
+    console.log(this.numberTombola);
+  }); 
+}
    
 validate(){
   if(!this.cards){
@@ -37,7 +57,7 @@ validate(){
   }
   this.isCard = false; 
 }
-  newCard(){
+newCard(){
     this.Card={
       id: 0,
       isPlaying: false, 
@@ -47,9 +67,11 @@ validate(){
   }
 
 watchCards(){
- // this.cardsInSessionStorage();
+  this.hiddenButton = true; 
+  this.progressbar = true; 
   setTimeout(()=> {
     this.cardsInSessionStorage();
+    this.progressbar = false; 
   }, 3000);
 }
 
@@ -73,14 +95,14 @@ watchCards(){
       this.saveBingoCard();
       this.newCard(); 
     }
-    this.isCard = false;     
+    this.isCard = false; 
   }
 
 cardsInSessionStorage(){
   let ids= JSON.parse(sessionStorage.getItem("listCards")); 
   if(ids){
+    this.hiddenButton = true; 
     this.cards = []; 
-    console.log("Despues de inicializar la lista: "+ this.cards);
     let list =ids.values as [];
     for (let i = 0; i <list.length; i++) {
        this.loadCards(list[i]); 

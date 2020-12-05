@@ -17,23 +17,26 @@
   </div>
 
     <div class="newNumber" *ngIf= '!isCard' >
-
       <img id="imageNumber" class="rounded-circle profile-img-card"
       src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" /><br>
       <h1  >{{100}}</h1>     
-      <input id="btn-cards" type="button" class="btn btn-success" (click)="watchCards()" value="See cards ">
+      <input id="btn-cards" type="button" class="btn btn-success" (click)="watchCards()" 
+      value="See cards " *ngIf='!hiddenButton'>
     </div> 
 
-    <div id="divProgresbar"                           >
-
+    <div id="contenedor" *ngIf= 'progressbar'>
+      <div id="barra">
+          <div id="texto">
+          </div>
+      </div>
     </div>
 
     <div  id="cardBingoPri" class="card" > 
       <img id="imagenT" class="rounded-circle profile-img-card"
          src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" /><br>
       <h5>Numbers played</h5>
-      <div id="cardNumberT"  *ngFor= "let n of numberChooseTrue" >        
-          <h6 id="numberT" class="card-body"><b> {{n}}</b></h6>            
+      <div id="cardNumberT"  *ngFor= "let n of numberTombola" >        
+          <h6 id="numberT" class="card-body"><b> {{n.number}}</b></h6>            
      </div>
  </div>
   <div class="divCards" *ngIf="cards" >
