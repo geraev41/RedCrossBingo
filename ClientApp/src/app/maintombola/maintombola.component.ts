@@ -17,7 +17,6 @@ export class MaintombolaComponent {
   number:MainTombola[];
   createNumber: MainTombola
   private room : Rooms; 
-  createNumber: MainTombola;
   numberPlaying:MainTombola;
   newNumber: number[];
   isChosen:MainTombola;
@@ -82,7 +81,6 @@ export class MaintombolaComponent {
       this.isChosen.isChosen=true;
       console.log(result);
       this.updateNumber();
-      
     })
    }
 

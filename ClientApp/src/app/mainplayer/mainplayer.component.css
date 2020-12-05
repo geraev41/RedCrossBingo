@@ -146,3 +146,101 @@ h5{
     background: red;
     background-color: red;
 }
+
+
+
+#contenedor {
+    position: absolute;
+    z-index: 3; 
+    margin-top: 44vh;
+    margin-left: 30%;
+    width: 20em;
+    height: 2.5em;
+    border: 3px solid #125c61;
+    border-radius: 10px 0px 30px 0px;
+}
+
+#barra {
+    width: 0;
+    height: 100%;
+    border-radius: 10px 0px 30px 0px;
+    -webkit-animation: progreso 3s linear infinite;
+            animation: progreso 3s linear infinite;
+
+    background: #56f7e9;
+}
+
+#texto {
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1em;
+
+    width: 9.5em;
+    height: 100%;
+
+    text-align: center;
+
+
+
+    mix-blend-mode: multiply;
+}
+
+#texto:after {
+    content: '⌛';
+    -webkit-animation: porcentaje 5s linear infinite;
+            animation: porcentaje 5s linear infinite;
+}
+
+@-webkit-keyframes progreso {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes progreso {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@-webkit-keyframes porcentaje {
+    0% {
+        content: '⌛';
+    }
+    25% {
+        content: '25%';
+    }
+    50% {
+        content: '⌛';
+    }
+    75% {
+        content: '75%';
+    }
+    100% {
+        content: '⌛';
+    }
+}
+
+@keyframes porcentaje {
+    0% {
+        content: '⌛';
+    }
+    25% {
+        content: '25%';
+    }
+    50% {
+        content: '⌛';
+    }
+    75% {
+        content: '75%';
+    }
+    100% {
+        content: '⌛';
+    }
+}
