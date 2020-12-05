@@ -77,13 +77,11 @@ namespace RedCrossBingo.GraphQL{
         private void GetRoomForName(RoomsRepository r ){
              Field<RoomsType>("getRoomName",
                 arguments: new QueryArguments(
-                    new QueryArgument<StringGraphType> { Name = "name" },
-                    new QueryArgument<IntGraphType> { Name = "userId" }
+                    new QueryArgument<StringGraphType> { Name = "name" }
                 ),
                 resolve: context => {
-                var userId = context.GetArgument<long>("userId");
                 var name = context.GetArgument<string>("name");
-                return r.GetRoomName(userId, name);
+                return r.GetRoomName(name);
             });
         }
 

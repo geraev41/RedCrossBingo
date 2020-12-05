@@ -15,10 +15,11 @@
                 <form class="box" method="post">
                     <img id="profile-img" class="rounded-circle profile-img-card"
                         src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" />                   
-                    <p class="text-muted"> Create your url and have fun!</p>
+                    <p class="text-muted"> Create your room and have fun!</p>
                     <input type="text" id="name" name="name" placeholder="Enter the name of your game"
-                     required autofocus >
-                    <input type="submit" name="" value="Create URL" > 
+                    [(ngModel)]="room.name" required autofocus >
+                    <input type="submit" name="" (click)="createRoom()"value="Create URL" > 
+                    <label> {{ error }}</label>
 
                     <table class="table">
                         <tr>
@@ -32,20 +33,16 @@
                           <th>
                             <button class="btn btn-danger" (click)="deleteRoom(room)"><i
                               class="fas fa-trash"></i></button>
+                            <button class="btn btn-success" (click)="openRoom(room)"><i class="fas fa-share-square">
+                            </i></button>
                           </th>
-                          
                         </tr>
                     </table>
                 </form>
-                
             </div>
         </div>
     </div>
-
-    
-
 </body>
-
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
