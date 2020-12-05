@@ -53,7 +53,7 @@ export function tokenGetter() {
       { path: 'login', component: LoginComponent },
       { path: 'player/:room', component: MainplayerComponent },
       { path: 'admin', component: MainadminComponent, canActivate: [AuthService] },
-      { path: 'game', component: GameComponent },
+      { path: 'game/:room', component: GameComponent },
       { path: 'tombola/:room', component: MaintombolaComponent, canActivate: [AuthService] },
 
     ]),

@@ -1,16 +1,15 @@
 #container{
     position: absolute;
-    color: rgb(217, 79, 245);
-    top: 28%; 
+    top: 23%; 
     text-align: center;  
     padding: 25px;
     box-shadow: -1px 1px 50px 10px rgb(0, 0, 0); 
     border-radius: 10px 0px 20px 0px;
     background-color: black;
-    height: 270px;
-    width: 670px;
+    width: 200px;
+    height: 200px;
     opacity: 85%;
-    left: 25%;
+    left: 5%;
 }
 
 #imagenT{
@@ -24,7 +23,126 @@ input[type="number"]{
     color: white;
     text-align: center;
 }
-
+#h1Tittle{
+    color: rgba(255, 255, 255, 0.884);
+    font-size:90%;
+}
 h2{
     color: rgba(255, 255, 255, 0.884);
+}
+
+.newNumber{
+    position: absolute;
+    top: 23%; 
+    text-align: center;  
+    padding: 25px;
+    box-shadow: -1px 1px 50px 10px rgb(0, 0, 0); 
+    border-radius: 10px 0px 20px 0px;
+    background-color: black;
+    height: 180px;
+    width: 150px;
+    opacity: 85%;
+    left: 8%;
+}
+
+.divCards{
+    background-color: rgba(0, 7, 1, 0.884);
+    color: rgb(217, 79, 245);
+    margin-top: 2%; 
+    padding-top: 2%;
+    width: 106%;
+    text-align: left;
+    box-shadow: -1px 1px 50px 10px rgb(0, 0, 0); 
+    border-radius: 10px 0px 20px 0px;
+    height: auto;
+    display: inline-block;
+    user-select: none;
+}
+
+#cardBingo{
+    text-align: center;  
+    height: auto;
+    display: inline-block;
+    width: auto;
+    margin: 1%;
+    padding-bottom: 2%;
+    background-color: rgba(77, 201, 194, 0.849);
+}
+
+#cardNumber{
+    height: auto;
+    display: flex;
+    display: inline-block;
+    width: auto;
+    margin: auto;
+}
+
+#imagen{
+    width: 30%;
+    height: 30%;
+}
+
+#imageNumber{
+    width: 70%;
+    height: 30%;
+}
+
+#number{  
+    color: rgb(97, 4, 66); 
+}
+
+#background-number{
+    box-shadow: -1px 1px 60px 2px rgb(0, 0, 0); 
+}
+
+#title{
+    color: black;
+}
+
+#imagenT{
+    text-align: center;
+    width: 20%;
+    height: 20%;
+}
+
+#numberT{
+    color: white; 
+    border-radius: 100%;
+    background-color: rgb(100, 99, 99);
+}
+
+h6{
+    font-size:12px;
+}
+
+#cardNumberT{   
+    display: inline-block;
+    margin: auto;
+    width: 54px;
+    height: 57px; 
+}
+
+#cardBingoPri{ 
+    width: 900px; 
+    display: inline-block; 
+    height: 64vh;     
+    left: 18%; 
+    text-align: center;  
+    margin-top: 3vh;                   
+    padding: 25px ;
+    box-shadow: -1px 1px 50px 10px rgb(0, 0, 0); 
+    border-radius: 10px 0px 20px 0px;
+    background-color: rgba(0, 7, 1, 0.884);
+}
+
+h1{
+    color: rgba(255, 255, 255, 0.884);
+}
+
+h5{
+    color: rgba(255, 255, 255, 0.884);
+}
+#divProgresbar{
+    background: red;
+    background-color: red;
 }

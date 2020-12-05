@@ -4,6 +4,9 @@ import {MainTombola} from './maintombola.interface';
 import {CREATE_NUMBERS, UPDATE_NUMBER} from './mutations';
 import {NUMBERS_TRUE_QUERY, NUMBERS_FALSE_QUERY} from './queries';
 import swal from 'sweetalert';
+import { Rooms } from '../mainadmin/mainadmin.interface';
+import { ActivatedRoute } from '@angular/router';
+import {ROOM_NAME} from './../mainplayer/queries';
 
 @Component({
   selector: 'app-maintombola',
@@ -11,15 +14,17 @@ import swal from 'sweetalert';
   styleUrls: ['./maintombola.component.css']
 })
 export class MaintombolaComponent {
-
   number:MainTombola[];
+  createNumber: MainTombola
+  private room : Rooms; 
   createNumber: MainTombola;
   numberPlaying:MainTombola;
   newNumber: number[];
   isChosen:MainTombola;
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo,private _route: ActivatedRoute) {
     this.newNumber = []; 
     this.getNumbersTrue();
+    this.getRoom();
     
   }
 
@@ -29,7 +34,7 @@ export class MaintombolaComponent {
       input:{
         number: i,
         isChosen: false,
-        roomsId:1
+        roomsId:this.room.id
       }
     }
     
@@ -81,6 +86,19 @@ export class MaintombolaComponent {
     })
    }
 
+   getRoom(){
+    var room = this._route.snapshot.paramMap.get("room");
+    this.apollo.watchQuery({
+      query : ROOM_NAME,
+      fetchPolicy: 'network-only',
+      variables: {
+        name: room
+      }
+    }).valueChanges.subscribe(result=>{
+        this.room = result.data.getRoomName; 
+    }); 
+  }
+
 
 
 
@@ -105,6 +123,5 @@ export class MaintombolaComponent {
       this.getNumbersTrue();     
     });
     }
-
 
 }
