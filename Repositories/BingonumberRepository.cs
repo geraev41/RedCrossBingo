@@ -15,20 +15,21 @@ namespace  RedCrossBingo.Repositories
             _context = context;
         }
 
-        public IEnumerable<BingoNumbers> All(ResolveFieldContext<object> context){
-            var results = from numbers in _context.BingoNumbers select numbers;           
+        public IEnumerable<BingoNumbers> All(ResolveFieldContext<object> context, long roomsId){
+            var results = from numbers in _context.BingoNumbers select numbers; 
+            results = results.Where( r=> r.RoomsId==roomsId); 
             return results;
         }
 
-        public IEnumerable<BingoNumbers> AllNumberTrue(ResolveFieldContext<object> context){
+        public IEnumerable<BingoNumbers> AllNumberTrue(ResolveFieldContext<object> context, long roomsId){
             var results = from numbers in _context.BingoNumbers select numbers; 
-            results = results.Where( r=> r.IsChosen == true);     
+            results = results.Where( r=> r.IsChosen == true && r.RoomsId==roomsId);     
             return results;
         }
 
-        public BingoNumbers NumberFalse(long number){                    
+        public BingoNumbers NumberFalse(long number, long roomsId){                    
             var results = from numbers in _context.BingoNumbers select numbers; 
-            var bingo = results.SingleOrDefault(x=> x.number==number && x.IsChosen==false);    
+            var bingo = results.SingleOrDefault(x=> x.number==number && x.IsChosen==false && x.RoomsId==roomsId);    
             return bingo;           
         }
 
