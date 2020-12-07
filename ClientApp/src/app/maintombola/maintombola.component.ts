@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import {MainTombola} from './maintombola.interface';
 import {CREATE_NUMBERS, UPDATE_NUMBER} from './mutations';
-import {NUMBERS_TRUE_QUERY, NUMBERS_FALSE_QUERY} from './queries';
+import {NUMBERS_TRUE_QUERY, NUMBERS_FALSE_QUERY,NUMBERS_TOMBOLA_QUERY} from './queries';
 import swal from 'sweetalert';
 import { Rooms } from '../mainadmin/mainadmin.interface';
 import { ActivatedRoute } from '@angular/router';
@@ -20,9 +20,10 @@ export class MaintombolaComponent {
   numberPlaying:MainTombola;
   newNumber: number[];
   isChosen:MainTombola;
+  hiddenBtnTombola=false;
+  numbersTombola:number[];
   constructor(private apollo: Apollo,private _route: ActivatedRoute) {
     this.newNumber = []; 
-    this.getNumbersTrue();
     this.getRoom();
     
   }
@@ -41,9 +42,11 @@ export class MaintombolaComponent {
       mutation : CREATE_NUMBERS,
       variables : variables
     }).subscribe(()=>{
-      swal("jajajajja!", "guardando varas!", "success");
+      swal("Tombola!", "Tombola ready to play!", "success");
     })
   };
+  this.hiddenBtnTombola=true;
+  
   }
 
 
@@ -52,13 +55,15 @@ export class MaintombolaComponent {
     this.apollo.watchQuery({
       query: NUMBERS_TRUE_QUERY,
       fetchPolicy:'network-only',
-      variables:{}
+      variables:{
+        roomsId:this.room.id
+      }
     }).valueChanges.subscribe(result=>{
       this.newNumber = [];
       result.data.bingoNumTrue.forEach(element => {
         this.newNumber.push(element.number);
       });
-      console.log(this.newNumber);
+      
     })
    }
 
@@ -71,7 +76,8 @@ export class MaintombolaComponent {
       query: NUMBERS_FALSE_QUERY,
       fetchPolicy:'network-only',
       variables:{
-        number:random
+        number:random,
+        roomsId:this.room.id
       }
     }).valueChanges.subscribe(result=>{
       this.newNumber.push(result.data.bingoNumFalse.number);
@@ -81,6 +87,7 @@ export class MaintombolaComponent {
       this.isChosen.isChosen=true;
       console.log(result);
       this.updateNumber();
+      
     })
    }
 
@@ -94,11 +101,11 @@ export class MaintombolaComponent {
       }
     }).valueChanges.subscribe(result=>{
         this.room = result.data.getRoomName; 
+        this.getNumbersTrue();
+        this.getNumbersTombola();
     }); 
+    
   }
-
-
-
 
    getRamdon(){
       const min=1;
@@ -120,6 +127,26 @@ export class MaintombolaComponent {
     }).subscribe(() => {
       this.getNumbersTrue();     
     });
+    }
+
+    getNumbersTombola(){
+      this.apollo.watchQuery({
+        query : NUMBERS_TOMBOLA_QUERY,
+        fetchPolicy: 'network-only',
+        variables: {
+          roomsId:this.room.id
+        }
+      }).valueChanges.subscribe(result=>{
+        this.numbersTombola = [];
+        console.log(result.data);
+        this.numbersTombola= result.data['bingoNum'];
+        if(this.numbersTombola.length > 0){
+          this.hiddenBtnTombola=true;
+        }else{
+          this.hiddenBtnTombola=false;
+        }
+      });
+
     }
 
 }

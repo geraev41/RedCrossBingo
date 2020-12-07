@@ -40,27 +40,37 @@ namespace RedCrossBingo.GraphQL{
         }
 
         private void ShowNumbers(BingonumberRepository b ){
-             Field<ListGraphType<BingoNumbersType>>("bingoNum",            
+             Field<ListGraphType<BingoNumbersType>>("bingoNum", 
+             arguments: new QueryArguments(
+                    new QueryArgument<IntGraphType> { Name = "roomsId" }
+                ),            
                 resolve: context => {
-                return b.All(context);
+                var roomsId = context.GetArgument<long>("roomsId");
+                return b.All(context, roomsId);
             });
         }
       
       private void ShowNumbersTrue(BingonumberRepository b ){
-             Field<ListGraphType<BingoNumbersType>>("bingoNumTrue",            
+             Field<ListGraphType<BingoNumbersType>>("bingoNumTrue", 
+              arguments: new QueryArguments(
+                    new QueryArgument<IntGraphType> { Name = "roomsId" }
+                ),           
                 resolve: context => {
-                return b.AllNumberTrue(context);
+                var roomsId = context.GetArgument<long>("roomsId");
+                return b.AllNumberTrue(context,roomsId);
             });
         }
 
         private void ShowNumbersFalse(BingonumberRepository b ){
              Field<BingoNumbersType>("bingoNumFalse", 
               arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "number" }
+                    new QueryArgument<IntGraphType> { Name = "number" },
+                    new QueryArgument<IntGraphType> { Name = "roomsId" }
                 ),           
                 resolve: context => {  
-                    var number = context.GetArgument<long>("number");               
-                return b.NumberFalse(number);
+                    var number = context.GetArgument<long>("number");
+                    var roomsId = context.GetArgument<long>("roomsId");               
+                return b.NumberFalse(number,roomsId);
             });
         }
 

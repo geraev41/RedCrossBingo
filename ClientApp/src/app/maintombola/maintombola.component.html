@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +9,9 @@
     <div class="newNumber" >
         <img id="imagTom" class="rounded-circle profile-img-card"
         src="https://www.lacasaelpozo.com/images/concours/logo-bingo.png" /><br>
-        <button mat-raised-button class="btn btn-info" (click)="save()" >Generate tombola</button>
+        <button mat-raised-button class="btn btn-info" (click)="save()" *ngIf="!hiddenBtnTombola">Generate tombola</button>
          <h1>{{numberPlaying}}</h1>     
-        <button mat-raised-button class="btn btn-info" (click)="getNumbers()">New number</button>      
+        <button mat-raised-button class="btn btn-info" (click)="getNumbers()" *ngIf="hiddenBtnTombola">New number</button>      
     </div>  
 
     <div class="usersPla" >
@@ -29,6 +28,7 @@
            <div id="cardNumberT" *ngFor= "let n of newNumber">        
                  <h6 id="numberT" class="card-body"><b> {{n}}</b></h6>            
        </div>
+       
    </div>
 
 </body>
