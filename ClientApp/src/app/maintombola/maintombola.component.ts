@@ -60,7 +60,7 @@ export class MaintombolaComponent {
       }
     }).valueChanges.subscribe(result=>{
       this.newNumber = [];
-      result.data.bingoNumTrue.forEach(element => {
+      result.data['bingoNumTrue'].forEach(element => {
         this.newNumber.push(element.number);
       });
       
@@ -80,9 +80,9 @@ export class MaintombolaComponent {
         roomsId:this.room.id
       }
     }).valueChanges.subscribe(result=>{
-      this.newNumber.push(result.data.bingoNumFalse.number);
-      this.numberPlaying= result.data.bingoNumFalse.number;
-      this.isChosen = result.data.bingoNumFalse; 
+      this.newNumber.push(result.data['bingoNumFalse'].number);
+      this.numberPlaying= result.data['bingoNumFalse'].number;
+      this.isChosen = result.data['bingoNumFalse']; 
       this.isChosen = {...this.isChosen}
       this.isChosen.isChosen=true;
       console.log(result);
@@ -100,7 +100,7 @@ export class MaintombolaComponent {
         name: room
       }
     }).valueChanges.subscribe(result=>{
-        this.room = result.data.getRoomName; 
+        this.room = result.data['getRoomName']; 
         this.getNumbersTrue();
         this.getNumbersTombola();
     }); 

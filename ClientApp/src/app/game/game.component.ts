@@ -38,7 +38,7 @@ export class GameComponent implements OnInit {
         id: id_card
       }
     }).valueChanges.subscribe(result=>{
-        this.cards.push(result.data.card); 
+        this.cards.push(result.data['card']); 
     }); 
   }
 

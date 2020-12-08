@@ -119,7 +119,7 @@ cardsInSessionStorage(){
       mutation : CREATE_CARD,
       variables: variables
     }).subscribe(result=>{
-      this.Card = result.data.createCard;
+      this.Card = result.data['createCard'];
       this.newNumberForCard(); 
       this.generateNumbers();
     }); 
@@ -188,9 +188,9 @@ getRoom(){
       name: room
     }
   }).valueChanges.subscribe(result=>{
-    if(result.data.getRoomName){
-      this.RoomId = result.data.getRoomName.id; 
-      this.room = result.data.getRoomName; 
+    if(result.data['getRoomName']){
+      this.RoomId = result.data['getRoomName'].id; 
+      this.room = result.data['getRoomName']; 
     }
   }); 
 }
@@ -203,7 +203,7 @@ loadCards(id_card){
       id: id_card
     }
   }).valueChanges.subscribe(result=>{
-      this.cards.push(result.data.card); 
+      this.cards.push(result.data['card']); 
   }); 
 }
 }

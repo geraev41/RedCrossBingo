@@ -30,8 +30,8 @@ export class LoginComponent  {
        }
      }).valueChanges.subscribe(result =>{
        
-      if(result.data.login){
-        sessionStorage.setItem("user", JSON.stringify(result.data.login)); 
+      if(result.data['login']){
+        sessionStorage.setItem("user", JSON.stringify(result.data['login'])); 
         // this.router.navigate(['/counter']);
         swal("Log in!", "You have successfully logged in!", "success");
         window.location.href = 'https://localhost:5001/admin';
