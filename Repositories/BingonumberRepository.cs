@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GraphQL.Types;
 using System;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace  RedCrossBingo.Repositories
 {
@@ -61,15 +62,19 @@ namespace  RedCrossBingo.Repositories
         }
 
 
-  public async Task<BingoNumbers> Update(long id, BingoNumbers b) {
+        public async Task<BingoNumbers> Update(long id, BingoNumbers b) {
             b.Id = id;
-            var updated = (_context.BingoNumbers.Update(b)).Entity;
-            if (updated == null)
-            {
-                return null;
-            }
-            await _context.SaveChangesAsync();
-            return updated;
+            var entry = _context.BingoNumbers.First(e=>e.Id == b.Id);
+            _context.Entry(entry).CurrentValues.SetValues(b);
+           await  _context.SaveChangesAsync();
+            // var updated = (_context.BingoNumbers.Update(b)).Entity;
+            // if (updated == null)
+            // {
+            //     return null;
+            // }
+      
+          //   await _context.SaveChangesAsync();
+            return entry;
         }
 
         public async Task<BingoNumbers> Remove(long id) {

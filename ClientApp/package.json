@@ -27,6 +27,8 @@
     "@nguniversal/module-map-ngfactory-loader": "8.1.1",
     "angular-bootstrap-modal": "^1.0.8",
     "apollo-angular": "^2.1.0",
+    "apollo-angular-link-http": "^1.11.0",
+    "apollo-link-ws": "^1.0.20",
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.5.3",
     "core-js": "^3.7.0",
@@ -36,6 +38,7 @@
     "oidc-client": "^1.10.1",
     "popper.js": "^1.16.0",
     "rxjs": "^6.6.3",
+    "subscriptions-transport-ws": "^0.9.18",
     "sweetalert": "^2.1.2",
     "zone.js": "0.11.3"
   },

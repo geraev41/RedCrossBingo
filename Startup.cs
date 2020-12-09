@@ -116,7 +116,7 @@ namespace RedCrossBingo
             app.UseRouting();
             app.UseWebSockets();
             app.UseGraphQLWebSockets<RedCrossBingoSchema>("/graphql");
-             app.UseGraphQL<RedCrossBingoSchema>();
+            app.UseGraphQL<RedCrossBingoSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
             {
                 Path = "/ui/playground"

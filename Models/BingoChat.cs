@@ -8,7 +8,7 @@ namespace RedCrossBingo.Models
   
     public class BingoChat : IBingoChat
     {
-         private readonly ISubject<BingoNumbers> _stream = new ReplaySubject<BingoNumbers>(1);
+         private readonly ISubject<BingoNumbers> _stream = new ReplaySubject<BingoNumbers>(0);
           public BingoNumbers AddBingo(BingoNumbers message)
         {
             _stream.OnNext(message);
