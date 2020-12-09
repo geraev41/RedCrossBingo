@@ -118,6 +118,7 @@ validateRoom(){
   });
  }
 
+ 
  openRoom(r : Rooms){
    var url = `${this.baseUrl}${'tombola/'}${r.name}`
    window.open(url); 
