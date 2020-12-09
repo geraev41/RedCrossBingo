@@ -71,4 +71,6 @@ table{
 }
 
 
-
+.navbar {
+    background-color: transparent !important;
+  }

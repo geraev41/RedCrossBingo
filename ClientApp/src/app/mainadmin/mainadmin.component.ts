@@ -123,4 +123,23 @@ validateRoom(){
    window.open(url); 
  }
 
+ logout() {
+  swal({
+    title: "Exit the game",
+    text: "Are you sure you want to exit the game?",
+    icon: "warning",
+    buttons: ["Cancel", "Exit"],
+    dangerMode: true,
+  })  
+  .then((willDelete) => {
+    if (willDelete) {
+      sessionStorage.clear();
+  window.location.href = 'https://localhost:5001/login';
+    } 
+  });
+ }
+
+ 
 }
+
+
