@@ -10,7 +10,8 @@ namespace  RedCrossBingo.GraphQL {
         public RedCrossBingoMutation(BingocardsRepository bcardRepository, 
         BingocardsnumbersRepository bcardNumberRepository,
         RoomsRepository roomsRepository,
-        BingonumberRepository bnumberRepository
+        BingonumberRepository bnumberRepository,
+        IBingoChat _chatBingo
         )
         {
             CreateRoom(roomsRepository); 
@@ -20,6 +21,7 @@ namespace  RedCrossBingo.GraphQL {
             DeleteRoom(roomsRepository); 
             CreateBingoNumber(bnumberRepository);
             UpdateBingoNumber(bnumberRepository);
+            SendBingo(_chatBingo); 
         }
 
         private void CreateRoom(RoomsRepository roomRepository){
@@ -93,6 +95,13 @@ namespace  RedCrossBingo.GraphQL {
             });
         }
 
+         private void SendBingo (IBingoChat bingo){
+            Field<BingoNumbersType>("sendBingoMessage",
+                arguments: new QueryArguments(new QueryArgument <NonNullGraphType<BingoNumbersInputType>> { Name = "message" }),
+                resolve: context => {
+                    return bingo.AddBingo(context.GetArgument<BingoNumbers>("message"));
+            });
+        }
 
     }
 }

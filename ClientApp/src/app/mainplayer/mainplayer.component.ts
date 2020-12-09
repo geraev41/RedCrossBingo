@@ -34,7 +34,6 @@ export class MainplayerComponent  {
     this.newCard(); 
     this.getRoom(); 
     this.cardsInSessionStorage(); 
-    this.getNumbersTombola(); 
    }
 
 getNumbersTombola(){
@@ -42,6 +41,7 @@ getNumbersTombola(){
     query : NUMBERS_TRUE_QUERY,
     fetchPolicy: 'network-only',
     variables: {
+      roomsId:this.room.id
     }
   }).valueChanges.subscribe(result=>{
     console.log(result); 
@@ -191,6 +191,7 @@ getRoom(){
     if(result.data['getRoomName']){
       this.RoomId = result.data['getRoomName'].id; 
       this.room = result.data['getRoomName']; 
+      this.getNumbersTombola(); 
     }
   }); 
 }

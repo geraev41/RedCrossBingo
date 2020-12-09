@@ -7,6 +7,8 @@ import swal from 'sweetalert';
 import { Rooms } from '../mainadmin/mainadmin.interface';
 import { ActivatedRoute } from '@angular/router';
 import {ROOM_NAME} from './../mainplayer/queries';
+import {SEND_NUMBER} from './subscription';
+
 
 @Component({
   selector: 'app-maintombola',
@@ -87,8 +89,22 @@ export class MaintombolaComponent {
       this.isChosen.isChosen=true;
       console.log(result);
       this.updateNumber();
+      this.sendMessage(); 
       
     })
+   }
+
+   sendMessage(){
+    const variables = {
+      input: {number: this.isChosen.number, isChosen: this.isChosen.isChosen,
+         roomsId : this.isChosen.roomsId} 
+    };
+    this.apollo.mutate({
+      mutation : SEND_NUMBER,
+      variables : variables
+    }).subscribe(result=>{
+      console.log(result); 
+    });
    }
 
    getRoom(){
