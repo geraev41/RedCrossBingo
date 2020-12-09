@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { ActivatedRoute } from '@angular/router';
 import { BingoCard } from './bingocard.interface';
@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 import { Rooms } from '../mainadmin/mainadmin.interface';
 import {MainTombola } from './../maintombola/maintombola.interface';
 import {NUMBERS_TRUE_QUERY } from './../maintombola/queries';
+import {RECEIVED_NUMBER} from './subscription';
 
 
 @Component({
@@ -17,7 +18,7 @@ import {NUMBERS_TRUE_QUERY } from './../maintombola/queries';
   templateUrl: './mainplayer.component.html',
   styleUrls: ['./mainplayer.component.css']
 })
-export class MainplayerComponent  {
+export class MainplayerComponent  implements OnInit  {
 
   private RoomId = 0; 
   private room : Rooms; 
@@ -28,7 +29,7 @@ export class MainplayerComponent  {
   private cards : BingoCard[];
   private progressbar = false; 
   private hiddenButton = false; 
-  private numberTombola : MainTombola[]; 
+  private numberTombola : number[] = []; 
 
   constructor( private Apollo: Apollo,private _route: ActivatedRoute,private route: Router) {
     this.newCard(); 
@@ -36,6 +37,18 @@ export class MainplayerComponent  {
     this.cardsInSessionStorage(); 
    }
 
+  ngOnInit(): void {
+    this.Apollo.subscribe({
+      query: RECEIVED_NUMBER
+    }).subscribe((result)=>{
+      console.log(result.data); 
+      var num = result.data['numberReceived'].number; 
+      if(!this.numberTombola.includes(num)){
+          this.numberTombola.push(num);
+      }
+    }); 
+  }
+  
 getNumbersTombola(){
   this.Apollo.watchQuery({
     query : NUMBERS_TRUE_QUERY,
@@ -44,9 +57,10 @@ getNumbersTombola(){
       roomsId:this.room.id
     }
   }).valueChanges.subscribe(result=>{
-    console.log(result); 
-    this.numberTombola= result.data['bingoNumTrue']; 
-    console.log(this.numberTombola);
+   // this.numberTombola= result.data['bingoNumTrue']; 
+    result.data['bingoNumTrue'].forEach(e=> {
+      this.numberTombola.push(e.number); 
+    });
   }); 
 }
    

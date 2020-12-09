@@ -87,12 +87,11 @@ export class MaintombolaComponent {
       this.isChosen = result.data['bingoNumFalse']; 
       this.isChosen = {...this.isChosen}
       this.isChosen.isChosen=true;
-      console.log(result);
       this.updateNumber();
-      this.sendMessage(); 
-      
+      this.sendMessage();
     })
    }
+
 
    sendMessage(){
     const variables = {
@@ -103,7 +102,7 @@ export class MaintombolaComponent {
       mutation : SEND_NUMBER,
       variables : variables
     }).subscribe(result=>{
-      console.log(result); 
+
     });
    }
 
@@ -141,7 +140,7 @@ export class MaintombolaComponent {
         }
       } 
     }).subscribe(() => {
-      this.getNumbersTrue();     
+      this.getNumbersTrue();   
     });
     }
 
@@ -162,7 +161,7 @@ export class MaintombolaComponent {
           this.hiddenBtnTombola=false;
         }
       });
-
+      
     }
 
 }
