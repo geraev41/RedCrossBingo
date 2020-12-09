@@ -8,6 +8,7 @@ namespace  RedCrossBingo.GraphQL {
         {
             Query = resolver.Resolve<RedCrossBingoQuery>(); 
             Mutation = resolver.Resolve<RedCrossBingoMutation>(); 
+            Subscription = resolver.Resolve<RedCrossSubscription>(); 
         }
     }
 }

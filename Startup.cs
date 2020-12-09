@@ -52,14 +52,17 @@ namespace RedCrossBingo
             services.AddScoped<BingonumberRepository>();
             services.AddScoped<MainAdminRepository>();
             services.AddScoped<UserRepository>();
-             services.AddScoped<RoomsRepository>();
+            services.AddScoped<RoomsRepository>();
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<RedCrossBingoSchema>();
+            services.AddSingleton<IBingoChat, BingoChat>();
+
 
             //Graphql configuration
             services.AddGraphQL(o => { o.ExposeExceptions = true;})
-                    .AddGraphTypes(ServiceLifetime.Scoped);
+                    .AddGraphTypes(ServiceLifetime.Scoped)
+                    .AddWebSockets();
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -111,6 +114,8 @@ namespace RedCrossBingo
             }
 
             app.UseRouting();
+            app.UseWebSockets();
+            app.UseGraphQLWebSockets<RedCrossBingoSchema>("/graphql");
              app.UseGraphQL<RedCrossBingoSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
             {
