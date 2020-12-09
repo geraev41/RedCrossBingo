@@ -87,17 +87,18 @@ validateRoom(){
     fetchPolicy:'network-only',
     variables:{}
   }).valueChanges.subscribe(result=>{
-    this.rooms= result.data.roomsRep;
+    this.rooms= result.data['roomsRep'];
   })
  }
 
 
  deleteRoom(room:Rooms){
+ 
   swal({
     title: "Are you sure?",
     text: "Do you want to remove this file from your information!!",
     icon: "warning",
-    buttons: true,
+    buttons: ["Cancel", "Delete"],
     dangerMode: true,
   })  
   .then((willDelete) => {

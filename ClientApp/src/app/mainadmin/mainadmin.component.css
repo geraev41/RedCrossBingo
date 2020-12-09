@@ -6,12 +6,10 @@ h3{
     color: white;
 }
 .box {
-     width: 85vh;      
-    top: 50%;
-    left: 50%; 
+     width: 105vh;      
     text-align: center;  
     margin-top: 10vh;                      
-    margin-left: 50%;  
+    margin-left: 40%;  
     padding: 25px ;
     box-shadow: -1px 1px 50px 10px rgb(0, 0, 0); 
     border-radius: 10px 0px 20px 0px;
