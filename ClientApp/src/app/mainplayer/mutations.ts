@@ -22,3 +22,14 @@ mutation createNumber($input: BingoCardNumbersInput!){
   }
 }
 `;
+
+export const UPDATE_CARD_NUMBER =  gql`
+ mutation($id:ID!, $input:BingoCardNumbersInput!) {
+  updateNumber(id:$id, input:$input ){
+    id
+    isSelected
+    number
+    bingoCardsId
+    }
+  }
+`;

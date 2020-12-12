@@ -4,13 +4,15 @@ import { ActivatedRoute } from '@angular/router';
 import { BingoCard } from './bingocard.interface';
 import { BingoCardNumber } from './bingocardnumber.interface';
 import {CREATE_CARD} from './mutations'; 
-import {CREATE_CARD_NUMBER} from './mutations'; 
+import {CREATE_CARD_NUMBER, UPDATE_CARD_NUMBER} from './mutations'; 
 import {ROOM_NAME, BINGOCARDID} from './queries';
 import {Router} from '@angular/router';
 import { Rooms } from '../mainadmin/mainadmin.interface';
 import {MainTombola } from './../maintombola/maintombola.interface';
 import {NUMBERS_TRUE_QUERY } from './../maintombola/queries';
-import {RECEIVED_NUMBER} from './subscription';
+import {RECEIVED_NUMBER, SEND_WINNER, RECEIVED_MESSAGE} from './subscription';
+import swal from 'sweetalert';
+
 
 
 @Component({
@@ -30,25 +32,139 @@ export class MainplayerComponent  implements OnInit  {
   private progressbar = false; 
   private hiddenButton = false; 
   private numberTombola : number[] = []; 
+  private numberReceive = 0; 
+  private cardNew : BingoCard; 
+  private numberUpdate: BingoCardNumber; 
+  public IsWinner : boolean =  false; //for to know is winner or lose
 
   constructor( private Apollo: Apollo,private _route: ActivatedRoute,private route: Router) {
     this.newCard(); 
     this.getRoom(); 
-    this.cardsInSessionStorage(); 
    }
 
   ngOnInit(): void {
-    this.Apollo.subscribe({
-      query: RECEIVED_NUMBER
+    this.Apollo.subscribe(
+      {
+      query: RECEIVED_NUMBER,
     }).subscribe((result)=>{
-      console.log(result.data); 
       var num = result.data['numberReceived'].number; 
       if(!this.numberTombola.includes(num)){
           this.numberTombola.push(num);
+          this.numberReceive = num; 
+          this.updateNumberIsSelected(num); 
       }
     }); 
+
+    this.Apollo.subscribe({
+      query: RECEIVED_MESSAGE
+    }).subscribe((result)=>{
+      if(!result.data['messageReceived'].isWinner && !this.IsWinner){
+        let emojiSad  = "😔"; 
+        this.showAler(emojiSad, "Game Over\nGood Luck for next time!"); 
+      }else if(!result.data['messageReceived'].isWinner && this.IsWinner){
+        let emojiHappy = "😎";
+        this.showAler(emojiHappy, "You are the winner!"); 
+      }
+    });
+  }
+
+
+   /**
+   * 
+   * @param emoji is face, if is winner is happy, and if is lose is sad
+   * @param msj message or winner or loser
+   */
+  showAler(emoji: string, msj: string){
+    swal({
+      title: emoji,
+      text: msj, 
+      buttons: {
+        Ok: true,
+      }
+    });
   }
   
+
+  /**
+   * Search in card number receive and update isSelected
+   * @param number receive get of tombola
+   */
+  updateNumberIsSelected(number: Number) {
+    this.cards.forEach(card => {
+        var contador = 0; 
+        card.bingoCardNumbers.forEach(n => {
+          if(n.number == number){
+            n = {...n}; 
+            n.isSelected = true; 
+            this.numberUpdate = n; 
+            card.bingoCardNumbers.splice(contador, 1, n); 
+            if(this.isWinner(card)){
+              this.IsWinner = true; 
+              this.sendMessageWinner(); 
+            }
+          }
+          contador++; 
+        });
+
+    });
+}
+
+
+sendMessageWinner(){
+  const variables = {
+    input: {body: '', isWinner:!this.IsWinner}
+  };
+  this.Apollo.mutate({
+    mutation : SEND_WINNER,
+    variables : variables
+  }).subscribe(result=>{
+  });
+}
+
+isWinner(card: BingoCard){
+  let isWinner = true; 
+  card.bingoCardNumbers.forEach(number => {
+    if(!number.isSelected){
+      isWinner =  false; 
+      return isWinner; 
+    }
+  });
+  return isWinner; 
+}
+
+/**
+ * update number in the db
+ * @param number to update
+ */
+updateCardNumber(){
+  if(this.numberUpdate.id > 0){
+    this.cards = []; 
+    this.Apollo.mutate({
+      mutation: UPDATE_CARD_NUMBER,
+      variables:{
+        id: this.numberUpdate.id,
+        input:{
+          number: this.numberUpdate.number,
+          isSelected:this.numberUpdate.isSelected,
+          bingoCardsId: this.numberUpdate.bingoCardsId
+        }
+      } 
+    }).subscribe((result) => {
+      this.cleanUpdateNumber(); 
+    });
+  }
+}
+
+
+cleanUpdateNumber(){
+  this.numberUpdate = {
+    id: 0, 
+    bingoCardsId: 0,
+    number: 0,
+    isSelected: false
+  };
+}
+
 getNumbersTombola(){
   this.Apollo.watchQuery({
     query : NUMBERS_TRUE_QUERY,
@@ -62,7 +178,9 @@ getNumbersTombola(){
       this.numberTombola.push(e.number); 
     });
   }); 
+  this.cardsInSessionStorage(); 
 }
+
    
 validate(){
   if(!this.cards){
@@ -123,6 +241,25 @@ cardsInSessionStorage(){
     }
   }
   this.validate();
+ 
+}
+
+seeNumbersOfTombola(){
+  this.numberTombola.forEach(number => {
+    this.cards.forEach(card =>{
+      var contador = 0; 
+        card.bingoCardNumbers.forEach(numberCard=>{
+          if(numberCard.number == number){
+            numberCard = {...numberCard}; 
+            numberCard.isSelected = true; 
+            card.bingoCardNumbers.splice(contador, 1, numberCard); 
+          }
+          contador++; 
+        }); 
+    });
+  });
+
+
 }
 
   saveBingoCard(){
@@ -218,7 +355,22 @@ loadCards(id_card){
       id: id_card
     }
   }).valueChanges.subscribe(result=>{
-      this.cards.push(result.data['card']); 
+    var card = this.convertToRead(result.data['card']); 
+    this.cards.push(card); 
+    this.seeNumbersOfTombola(); 
   }); 
 }
+
+convertToRead(card: BingoCard){
+    var listCardNumbers = [...card.bingoCardNumbers]; 
+    this.cardNew = {
+      id : card.id,
+      isPlaying: card.isPlaying,
+      roomsId: card.roomsId,
+      bingoCardNumbers: listCardNumbers
+    }
+    return this.cardNew; 
+}
+
+
 }

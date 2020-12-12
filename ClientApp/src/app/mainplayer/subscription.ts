@@ -10,3 +10,21 @@ export const RECEIVED_NUMBER = gql`
     }
 }
 `;
+
+export const RECEIVED_MESSAGE = gql`
+    subscription{
+        messageReceived{
+            body
+            isWinner
+        }
+    }
+  `;
+
+export const SEND_WINNER = gql`
+  mutation($input:MessageInput!) {
+    sendMessageWinner(message: $input){
+        body
+        isWinner
+      }
+    }
+`;

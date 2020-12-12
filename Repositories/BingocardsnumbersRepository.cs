@@ -37,14 +37,19 @@ namespace  RedCrossBingo.Repositories
         }
 
         public async Task<BingoCardNumbers> Update(long id, BingoCardNumbers b) {
-            b.Id = id;
-            var updated = (_context.BingoCardNumbers.Update(b)).Entity;
-            if (updated == null)
-            {
-                return null;
-            }
-            await _context.SaveChangesAsync();
-            return updated;
+            // b.Id = id;
+            // var updated = (_context.BingoCardNumbers.Update(b)).Entity;
+            // if (updated == null)
+            // {
+            //     return null;
+            // }
+            // await _context.SaveChangesAsync();
+
+             b.Id = id;
+            var entry = _context.BingoCardNumbers.First(e=>e.Id == b.Id);
+            _context.Entry(entry).CurrentValues.SetValues(b);
+           await  _context.SaveChangesAsync();
+            return entry;
         }
 
         public async Task<BingoCardNumbers> Remove(long id) {
