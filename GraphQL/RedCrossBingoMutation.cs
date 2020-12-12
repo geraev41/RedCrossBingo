@@ -22,6 +22,7 @@ namespace  RedCrossBingo.GraphQL {
             CreateBingoNumber(bnumberRepository);
             UpdateBingoNumber(bnumberRepository);
             SendBingo(_chatBingo); 
+            SendMessageWinner(_chatBingo); 
         }
 
         private void CreateRoom(RoomsRepository roomRepository){
@@ -100,6 +101,14 @@ namespace  RedCrossBingo.GraphQL {
                 arguments: new QueryArguments(new QueryArgument <NonNullGraphType<BingoNumbersInputType>> { Name = "message" }),
                 resolve: context => {
                     return bingo.AddBingo(context.GetArgument<BingoNumbers>("message"));
+            });
+        }
+
+        private void SendMessageWinner(IBingoChat bingo){
+            Field<MessageType>("sendMessageWinner",
+                arguments: new QueryArguments(new QueryArgument <NonNullGraphType<MessageInputType>> { Name = "message" }),
+                resolve: context => {
+                    return bingo.AddNewMessage(context.GetArgument<Message>("message"));
             });
         }
 

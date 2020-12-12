@@ -19,7 +19,6 @@ import {MaintombolaComponent} from './maintombola/maintombola.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import {AuthService} from './services/auth.service';
 
-
 export function tokenGetter() {
   let result: [];
    result = JSON.parse(sessionStorage.getItem('user'));

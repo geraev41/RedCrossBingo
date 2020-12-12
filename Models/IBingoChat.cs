@@ -6,5 +6,9 @@ namespace RedCrossBingo.Models
         BingoNumbers AddBingo(BingoNumbers message);
 
         IObservable<BingoNumbers> BingoMessages();
+
+        Message AddNewMessage(Message message); 
+        IObservable<Message> Messages();
+
     }
 }
