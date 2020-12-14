@@ -109,7 +109,9 @@ export class MainplayerComponent  implements OnInit  {
     });
 }
 
-
+/**
+ * Send message winner
+ */
 sendMessageWinner(){
   const variables = {
     input: {body: '', isWinner:!this.IsWinner}
@@ -121,6 +123,10 @@ sendMessageWinner(){
   });
 }
 
+/**
+ * Search card with numers all selecteds
+ * @param card 
+ */
 isWinner(card: BingoCard){
   let isWinner = true; 
   card.bingoCardNumbers.forEach(number => {
@@ -155,7 +161,9 @@ updateCardNumber(){
   }
 }
 
-
+/**
+ * Cleaning object number
+ */
 cleanUpdateNumber(){
   this.numberUpdate = {
     id: 0, 
@@ -164,7 +172,9 @@ cleanUpdateNumber(){
     isSelected: false
   };
 }
-
+/**
+ * Get numbers of tombola playing
+ */
 getNumbersTombola(){
   this.Apollo.watchQuery({
     query : NUMBERS_TRUE_QUERY,
@@ -181,7 +191,9 @@ getNumbersTombola(){
   this.cardsInSessionStorage(); 
 }
 
-   
+/**
+ * Validate list of cards
+ */
 validate(){
   if(!this.cards){
     this.isCard = true; 
@@ -189,6 +201,9 @@ validate(){
   }
   this.isCard = false; 
 }
+/**
+ * Initialize card
+ */
 newCard(){
     this.Card={
       id: 0,
@@ -198,6 +213,9 @@ newCard(){
     }
   }
 
+/**
+ * See cards selected
+ */
 watchCards(){
   this.hiddenButton = true; 
   this.progressbar = true; 
@@ -207,7 +225,10 @@ watchCards(){
   }, 3000);
 }
 
-  newNumberForCard(){
+/**
+ * New number for card
+ */
+newNumberForCard(){
     this.numberForCard= {
       id : 0,
       bingoCardsId : 0,
@@ -215,9 +236,10 @@ watchCards(){
       isSelected: false
     }
   }
-  
-
-  createCards(){
+/**
+ * Create cards
+ */
+createCards(){
     this.validate(); 
     if(this.RoomId == 0){
       alert("You changed the url name!"); 
@@ -229,7 +251,9 @@ watchCards(){
     }
     this.isCard = false; 
   }
-
+/**
+ * get id of cards in session storage
+ */
 cardsInSessionStorage(){
   let ids= JSON.parse(sessionStorage.getItem("listCards")); 
   if(ids){
@@ -244,6 +268,9 @@ cardsInSessionStorage(){
  
 }
 
+/**
+ * search for every card, numbers get in the tombola
+ */
 seeNumbersOfTombola(){
   this.numberTombola.forEach(number => {
     this.cards.forEach(card =>{
@@ -258,11 +285,12 @@ seeNumbersOfTombola(){
         }); 
     });
   });
-
-
 }
 
-  saveBingoCard(){
+/**
+ * Save card in the db
+ */
+saveBingoCard(){
     const variables = {
       input: {roomsId: this.RoomId, isPlaying: false} 
     };
@@ -294,6 +322,9 @@ generateNumbers(){
   this.saveIdCardInSessionStorage(this.Card.id); 
 }
 
+/**
+ * Save number for card
+ */
 saveNumber(){
   const variables = {
     input: {number:this.numberForCard.number, isSelected: false, bingoCardsId:this.Card.id}
@@ -305,11 +336,14 @@ saveNumber(){
   }); 
 }
 
-  getRamdon(){
+/**
+ * Get number ramdon in range 1 at 75
+ */
+getRamdon(){
     const min=1;
     const max=75;
     return  Math.floor(Math.random()*(max-min+1)+min);
-  }
+}
 
 
 /**
@@ -330,6 +364,9 @@ saveIdCardInSessionStorage(id_card: number){
     sessionStorage.setItem("listCards", JSON.stringify(data));
 }
 
+/**
+ * Get room for name
+ */
 getRoom(){
   var room = this._route.snapshot.paramMap.get("room");
   this.Apollo.watchQuery({
@@ -347,6 +384,10 @@ getRoom(){
   }); 
 }
 
+/**
+ * load cards with for id card
+ * @param id_card 
+ */
 loadCards(id_card){
   this.Apollo.watchQuery({
     query : BINGOCARDID,
@@ -361,6 +402,10 @@ loadCards(id_card){
   }); 
 }
 
+/**
+ * Convert to object card at write
+ * @param card 
+ */
 convertToRead(card: BingoCard){
     var listCardNumbers = [...card.bingoCardNumbers]; 
     this.cardNew = {
@@ -371,6 +416,5 @@ convertToRead(card: BingoCard){
     }
     return this.cardNew; 
 }
-
 
 }

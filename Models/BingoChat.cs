@@ -19,6 +19,7 @@ namespace RedCrossBingo.Models
 
         public IObservable<BingoNumbers> BingoMessages()
         {
+            System.Console.WriteLine("Cantidad de subscriptos: " + _stream.Count());
             return _stream.AsObservable(); 
         }
 

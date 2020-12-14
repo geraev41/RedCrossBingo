@@ -25,6 +25,9 @@ export class MainadminComponent {
     this.userInSession(); 
    }
 
+   /**
+    * get user in session storage 
+    */
   userInSession(){
      var user = JSON.parse(sessionStorage.getItem('user')); 
      this.userLogueado = {
@@ -33,7 +36,9 @@ export class MainadminComponent {
       password: user['password']
      }
    }
-
+/**
+ * New room, initialize object
+ */
 newRoom(){
   this.room = {
     id: 0, 
@@ -41,7 +46,9 @@ newRoom(){
     url: ''    
   }
 }
-
+/**
+ * Create room and validate
+ */
 createRoom(){
   try {
     this.validateRoom(); 
@@ -55,6 +62,9 @@ createRoom(){
   }
 }
 
+/**
+ * Create room in the db
+ */
 save(){
   var newUrl =  `${this.baseUrl}${'player/'}${this.room.name}`
   const variables = {
@@ -68,7 +78,9 @@ save(){
   }); 
 }
 
-
+/**
+ * Validate room, name
+ */
 validateRoom(){
   this.error = ''; 
   var name = this.room.name.toLowerCase().trim().replace(/ /g, "");
@@ -81,6 +93,9 @@ validateRoom(){
   }
   this.room.name = name; 
 }
+/**
+ * Get rooms 
+ */
  getRooms(){
   this.apollo.watchQuery({
     query: ROOMS_QUERY,
@@ -91,9 +106,11 @@ validateRoom(){
   })
  }
 
-
+/**
+ * Delete room for id
+ * @param room 
+ */
  deleteRoom(room:Rooms){
- 
   swal({
     title: "Are you sure?",
     text: "Do you want to remove this file from your information!!",
@@ -113,16 +130,20 @@ validateRoom(){
         icon: "success",
       });
     } else {
-     
     }
   });
  }
-
+/**
+ * Open room for get numbers and play
+ * @param r 
+ */
  openRoom(r : Rooms){
    var url = `${this.baseUrl}${'tombola/'}${r.name}`
    window.open(url); 
  }
-
+/**
+ * Finish user in session 
+ */
  logout() {
   swal({
     title: "Exit the game",
@@ -134,7 +155,7 @@ validateRoom(){
   .then((willDelete) => {
     if (willDelete) {
       sessionStorage.clear();
-  window.location.href = 'https://localhost:5001/login';
+      window.location.href = 'https://localhost:5001/login';
     } 
   });
  }
